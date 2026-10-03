@@ -118,7 +118,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Return `false` (never throw) for unauthenticated users, absent `cognito:groups` claim, or any caught error
   - _Requirements: 8.4, 8.5_
 
-- [ ] 15. Write `src/lib/amplify/index.ts`
+- [x] 15. Write `src/lib/amplify/index.ts`
   - Re-export `{ runWithAmplifyServerContext, client }` from `./client`
   - Re-export `{ isAdmin }` from `./auth`
   - _Requirements: 2.8_
