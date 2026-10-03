@@ -112,7 +112,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - The direct `amplify_outputs.json` import ensures a build-time error if the file is absent (satisfies Requirement 8.6)
   - _Requirements: 8.1, 8.2, 8.3, 8.6_
 
-- [ ] 14. Write `src/lib/amplify/auth.ts`
+- [x] 14. Write `src/lib/amplify/auth.ts`
   - Import `fetchAuthSession` from `aws-amplify/auth`
   - Export `async function isAdmin(): Promise<boolean>` that fetches the auth session, reads `session.tokens?.accessToken?.payload?.['cognito:groups']`, and returns `true` if and only if the array includes `"admin"`
   - Return `false` (never throw) for unauthenticated users, absent `cognito:groups` claim, or any caught error
