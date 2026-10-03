@@ -15,7 +15,7 @@
   "powers": {
     "mcpServers": {
       "power-aws-amplify-aws-mcp": {
-        "command": "uvx",
+        "command": "/Users/ed/.local/bin/uvx",
         "timeout": 100000,
         "transport": "stdio",
         "args": [
