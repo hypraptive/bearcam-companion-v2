@@ -216,9 +216,9 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Run `npm test` (mapped to `vitest --run`) and confirm all tests pass
   - Ask the user if any questions arise before proceeding to the hosting deployment.
 
-- [ ] 25. Connect repository to Amplify Hosting and verify deployment
+- [x] 25. Connect repository to Amplify Hosting and verify deployment
   - ⚠️ Requires AWS console access and a pushed git repository
-  - [ ] 25.1 Push the repository to GitHub (or your git provider of choice)
+  - [-] 25.1 Push the repository to GitHub (or your git provider of choice)
     - Ensure `.gitignore` is committed and `amplify_outputs.json` is not tracked
     - Push the `main` branch
     - _Requirements: 10.1_
