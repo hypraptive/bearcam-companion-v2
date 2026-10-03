@@ -14,22 +14,22 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Confirm `next` version is 14 or higher in `package.json`
   - _Requirements: 1.1, 1.2_
 
-- [ ] 2. Initialize Amplify Gen 2
+- [x] 2. Initialize Amplify Gen 2
   - Run `npm create amplify@latest` inside the project directory to generate the `amplify/` directory and add Amplify packages to `package.json`
   - Confirm `amplify/backend.ts`, `amplify/auth/resource.ts`, `amplify/data/resource.ts`, and `amplify/storage/resource.ts` stubs are present after init
   - _Requirements: 3.1, 3.2_
 
-- [ ] 3. Install and configure Tailwind CSS v4
-  - [ ] 3.1 Install Tailwind v4 and PostCSS plugin
+- [x] 3. Install and configure Tailwind CSS v4
+  - [x] 3.1 Install Tailwind v4 and PostCSS plugin
     - Run `npm install tailwindcss @tailwindcss/postcss postcss`
     - Confirm `tailwindcss` version is `^4.x` in `package.json`
     - _Requirements: 1.4_
-  - [ ] 3.2 Create PostCSS config and globals.css
+  - [x] 3.2 Create PostCSS config and globals.css
     - Create `postcss.config.mjs` with `@tailwindcss/postcss` as the sole plugin (see design §3)
     - Replace `src/app/globals.css` content with `@import "tailwindcss";` as the sole line — no `tailwind.config.js` file
     - _Requirements: 1.4_
 
-- [ ] 4. Initialize shadcn/ui
+- [x] 4. Initialize shadcn/ui
   - Run `npx shadcn@latest init` — select Default style, Neutral base color, CSS variables yes, components path `src/components/ui`
   - Confirm `src/components/ui/` directory is created and `globals.css` is updated with shadcn design tokens
   - Confirm no `tailwind.config.js` was generated (shadcn v4-compatible init uses CSS-only config)
