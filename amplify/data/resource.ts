@@ -1,17 +1,93 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
-/*== STEP 1 ===============================================================
-The section below creates a Todo database table with a "content" field. Try
-adding a new "isDone" field as a boolean. The authorization rule below
-specifies that any unauthenticated user can "create", "read", "update", 
-and "delete" any "Todo" records.
-=========================================================================*/
+/**
+ * BearCam Companion v2 data schema.
+ *
+ * Four core models: Image, Object, Identification, Bear.
+ * Relationship chain:
+ *   Image (1) -> Object (many) -> Identification (many)
+ *   Bear (reference) <- Identification
+ *
+ * Denormalized fields (bearCount, bearList, consensusName, consensusConfidence,
+ * totalVotes) are maintained by the compute-bear-list Lambda, never written from
+ * the frontend.
+ *
+ * User Pool binding note (verified against @aws-amplify/backend 1.25.1 GA):
+ * `defineData()`'s props (DataProps) accept only `schema`, `name`,
+ * `authorizationModes`, `functions`, `logging`, and migration/stack overrides —
+ * there is no `auth` field. The design doc (§5c) suggested importing `auth` into
+ * this file, but the GA API provides no way to pass it to `defineData()`, so an
+ * import here would be unused dead code. The Cognito User Pool is bound to the
+ * owner- and group-based auth rules automatically when both `auth` and `data`
+ * are passed to `defineBackend()` in amplify/backend.ts (task 10). No import of
+ * `auth` is required or possible in this file for that binding to work.
+ */
 const schema = a.schema({
-  Todo: a
+  Image: a
     .model({
-      content: a.string(),
+      url: a.url(),
+      date: a.datetime(),
+      s3Key: a.string(),
+      bearCount: a.integer(),
+      bearList: a.string(),
+      camFeed: a.enum(['BF', 'RF', 'BFL', 'KRV', 'RW']),
+      objects: a.hasMany('Object', 'imageId'),
     })
-    .authorization((allow) => [allow.guest()]),
+    .authorization((allow) => [
+      allow.publicApiKey().to(['read']),
+      allow.group('admin').to(['create', 'update', 'delete']),
+    ]),
+
+  Object: a
+    .model({
+      label: a.string(),
+      confidence: a.float(),
+      width: a.float(),
+      height: a.float(),
+      left: a.float(),
+      top: a.float(),
+      imageId: a.id().required(),
+      image: a.belongsTo('Image', 'imageId'),
+      identifications: a.hasMany('Identification', 'objectId'),
+      consensusName: a.string(),
+      consensusConfidence: a.float(),
+      totalVotes: a.integer(),
+    })
+    .authorization((allow) => [
+      allow.publicApiKey().to(['read']),
+      allow.group('admin').to(['create', 'update', 'delete']),
+    ]),
+
+  Identification: a
+    .model({
+      bearId: a.id(),
+      name: a.string(),
+      userId: a.string(),
+      userDisplayName: a.string(),
+      objectId: a.id().required(),
+      object: a.belongsTo('Object', 'objectId'),
+      bear: a.belongsTo('Bear', 'bearId'),
+    })
+    .authorization((allow) => [
+      allow.publicApiKey().to(['read']),
+      allow.authenticated().to(['create']),
+      allow.owner().to(['update', 'delete']),
+      allow.group('admin').to(['create', 'update', 'delete']),
+    ]),
+
+  Bear: a
+    .model({
+      number: a.string(),
+      name: a.string(),
+      displayName: a.string(),
+      notes: a.string(),
+      active: a.boolean(),
+      identifications: a.hasMany('Identification', 'bearId'),
+    })
+    .authorization((allow) => [
+      allow.publicApiKey().to(['read']),
+      allow.group('admin').to(['create', 'update', 'delete']),
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -19,35 +95,9 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'identityPool',
+    defaultAuthorizationMode: 'apiKey',
+    apiKeyAuthorizationMode: {
+      expiresInDays: 365,
+    },
   },
 });
-
-/*== STEP 2 ===============================================================
-Go to your frontend source code. From your client-side code, generate a
-Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY
-WORK IN THE FRONTEND CODE FILE.)
-
-Using JavaScript or Next.js React Server Components, Middleware, Server 
-Actions or Pages Router? Review how to generate Data clients for those use
-cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
-=========================================================================*/
-
-/*
-"use client"
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-
-const client = generateClient<Schema>() // use this Data client for CRUDL requests
-*/
-
-/*== STEP 3 ===============================================================
-Fetch records from the database and use them in your frontend component.
-(THIS SNIPPET WILL ONLY WORK IN THE FRONTEND CODE FILE.)
-=========================================================================*/
-
-/* For example, in a React component, you can use this snippet in your
-  function's RETURN statement */
-// const { data: todos } = await client.models.Todo.list()
-
-// return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>

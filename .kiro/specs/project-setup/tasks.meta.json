@@ -125,6 +125,49 @@
         "chatSessionId": "sess_67c318f5-50fe-4d0c-92ac-d7602bd592e7",
         "timestamp": 1791052785060
       }
+    ],
+    "9.1 Define all four models with correct fields and relationships": [
+      {
+        "executionId": "5c1e9a03-8dc1-459a-83fb-2e81dc0c767c",
+        "chatSessionId": "sess_66511b69-4eec-468e-928f-d34fd6c09c2c",
+        "timestamp": 1791052935190
+      },
+      {
+        "executionId": "5c1e9a03-8dc1-459a-83fb-2e81dc0c767c",
+        "chatSessionId": "sess_66511b69-4eec-468e-928f-d34fd6c09c2c",
+        "timestamp": 1791053035873
+      }
+    ],
+    "9.2 Apply authorization rules to all models": [
+      {
+        "executionId": "5c1e9a03-8dc1-459a-83fb-2e81dc0c767c",
+        "chatSessionId": "sess_66511b69-4eec-468e-928f-d34fd6c09c2c",
+        "timestamp": 1791053038328
+      },
+      {
+        "executionId": "5c1e9a03-8dc1-459a-83fb-2e81dc0c767c",
+        "chatSessionId": "sess_66511b69-4eec-468e-928f-d34fd6c09c2c",
+        "timestamp": 1791053115893
+      }
+    ],
+    "9.3 Configure `defineData()` and export Schema type": [
+      {
+        "executionId": "5c1e9a03-8dc1-459a-83fb-2e81dc0c767c",
+        "chatSessionId": "sess_66511b69-4eec-468e-928f-d34fd6c09c2c",
+        "timestamp": 1791053118293
+      },
+      {
+        "executionId": "5c1e9a03-8dc1-459a-83fb-2e81dc0c767c",
+        "chatSessionId": "sess_66511b69-4eec-468e-928f-d34fd6c09c2c",
+        "timestamp": 1791053217264
+      }
+    ],
+    "9. Write `amplify/data/resource.ts`": [
+      {
+        "executionId": "5c1e9a03-8dc1-459a-83fb-2e81dc0c767c",
+        "chatSessionId": "sess_66511b69-4eec-468e-928f-d34fd6c09c2c",
+        "timestamp": 1791053217302
+      }
     ]
   }
 }

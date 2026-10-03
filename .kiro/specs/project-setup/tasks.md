@@ -63,20 +63,20 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Export the result as `export const storage`
   - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [ ] 9. Write `amplify/data/resource.ts`
-  - [ ] 9.1 Define all four models with correct fields and relationships
+- [x] 9. Write `amplify/data/resource.ts`
+  - [x] 9.1 Define all four models with correct fields and relationships
     - `Image` model: `url`, `date`, `s3Key`, `bearCount`, `bearList`, `camFeed` enum (`BF`,`RF`,`BFL`,`KRV`,`RW`), `hasMany Object` via `imageId`
     - `Object` model: `label`, `confidence`, `width`, `height`, `left`, `top`, `imageId` (required), `consensusName`, `consensusConfidence`, `totalVotes`, `belongsTo Image`, `hasMany Identification` via `objectId`
     - `Identification` model: `bearId` (nullable), `name`, `userId`, `userDisplayName`, `objectId` (required), `belongsTo Object`, `belongsTo Bear`
     - `Bear` model: `number`, `name`, `displayName`, `notes`, `active`, `hasMany Identification` via `bearId`
     - _Requirements: 6.2, 6.3, 6.4, 6.5_
-  - [ ] 9.2 Apply authorization rules to all models
+  - [x] 9.2 Apply authorization rules to all models
     - `Image`: publicApiKey → read; admin group → create/update/delete
     - `Object`: publicApiKey → read; admin group → create/update/delete
     - `Identification`: publicApiKey → read; authenticated → create; owner → update/delete; admin group → create/update/delete
     - `Bear`: publicApiKey → read; admin group → create/update/delete
     - _Requirements: 6.6, 6.7, 6.8, 6.9_
-  - [ ] 9.3 Configure `defineData()` and export Schema type
+  - [x] 9.3 Configure `defineData()` and export Schema type
     - Import `auth` from `../auth/resource` and pass it to `defineData()` so owner/group rules bind to the Cognito User Pool
     - Set `defaultAuthorizationMode: 'apiKey'` with 365-day expiry
     - Export `export type Schema = typeof schema` for typed client derivation
