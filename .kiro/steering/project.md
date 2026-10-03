@@ -77,3 +77,15 @@ The migration is a one-time script run after the v2 backend is deployed and befo
 5. **Denormalized fields** — rebuild `bearCount` and `bearList` on each `Image`
 
 The migration will be handled as a dedicated spec (`data-migration`) after the `project-setup` spec is complete. Do not design the v2 schema or Lambda logic in ways that make this migration harder — the `computeBearList` Lambda logic should be reusable by the migration script.
+
+### Cognito User Migration
+
+The v1 Cognito User Pool can be migrated to v2. There are three approaches — the choice should be made before the `data-migration` spec begins:
+
+- **Option A — Export/import users (recommended default)**: Export users from the v1 pool via Cognito's CSV export, transform to the required format, and import into the v2 pool. Users must reset their password once via email. Preserves usernames and email addresses, so migrated identifications will link correctly via `userDisplayName`.
+
+- **Option B — Reuse the existing User Pool**: Configure Amplify Gen 2 with `referenceAuth()` instead of `defineAuth()` to point at the v1 Cognito User Pool. No password reset required and existing sessions remain valid. More complex setup — requires reconciling v1 pool settings with v2 requirements, and changes task 7 of the `project-setup` spec.
+
+- **Option C — Start fresh**: Let users re-register. Simplest approach, but migrated identifications won't link to new accounts, breaking leaderboard continuity.
+
+Regardless of which option is chosen, the `admin` Cognito group must be manually re-created and populated in the v2 pool.
