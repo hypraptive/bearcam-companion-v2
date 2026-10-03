@@ -136,7 +136,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Tailwind utility classes only
   - _Requirements: 9.1, 9.5_
 
-- [ ] 18. Write `src/app/layout.tsx`
+- [x] 18. Write `src/app/layout.tsx`
   - Default export `RootLayout` (required by Next.js App Router) accepting `{ children: ReactNode }`
   - Import and render named `Nav` from `@/components/layout/nav` and named `Footer` from `@/components/layout/footer`
   - Import `globals.css`; use `Inter` font from `next/font/google`
