@@ -58,7 +58,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Export the result as `export const auth`
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [ ] 8. Write `amplify/storage/resource.ts`
+- [x] 8. Write `amplify/storage/resource.ts`
   - Implement `defineStorage()` with bucket name `bearcam-images` and the `public/*` access rules: guest → read, authenticated → read, admin group → read/write/delete
   - Export the result as `export const storage`
   - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
