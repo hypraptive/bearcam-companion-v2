@@ -40,7 +40,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Confirm none of `react-icons`, `@heroicons/react`, or `@fortawesome/*` appear in `package.json`
   - _Requirements: 1.5, 1.6_
 
-- [ ] 6. Create directory structure with placeholders
+- [x] 6. Create directory structure with placeholders
   - Create `src/app/(public)/.gitkeep`
   - Create `src/app/(auth)/.gitkeep`
   - Create `src/app/admin/.gitkeep`
@@ -53,7 +53,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Create `amplify/functions/compute-bear-list/.gitkeep`
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.11_
 
-- [ ] 7. Write `amplify/auth/resource.ts`
+- [x] 7. Write `amplify/auth/resource.ts`
   - Implement `defineAuth()` with `loginWith.email: true`, `groups: ['admin']`, the password policy (min 8, uppercase, lowercase, numbers, symbols), and `preferredUsername` attribute (optional, mutable)
   - Export the result as `export const auth`
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
