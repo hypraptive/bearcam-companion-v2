@@ -130,7 +130,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Tailwind utility classes only — no inline styles
   - _Requirements: 9.1, 9.5, 9.6_
 
-- [ ] 17. Write `src/components/layout/footer.tsx`
+- [x] 17. Write `src/components/layout/footer.tsx`
   - Named export `Footer` (no default export) with explicit `React.JSX.Element` return type
   - Render a `<footer>` with attribution text linking to `https://explore.org` via a plain `<a>` (external link — `<Link>` is for internal navigation only)
   - Tailwind utility classes only
