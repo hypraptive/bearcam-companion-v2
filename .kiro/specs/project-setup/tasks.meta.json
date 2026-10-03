@@ -1,5 +1,14 @@
 {
-  "pbtResults": {},
+  "pbtResults": {
+    "23.4 Write property test: `isAdmin()` group membership correctness": {
+      "status": "passed",
+      "lastRunTimestamp": 1791057826396
+    },
+    "23.3 Write property test: `cn()` non-conflicting class preservation": {
+      "status": "passed",
+      "lastRunTimestamp": 1791057826424
+    }
+  },
   "executionHistory": {
     "1. Bootstrap the Next.js project": [
       {
@@ -323,6 +332,97 @@
         "executionId": "0f2e7035-8976-420a-bfaf-f76be9fd03ce",
         "chatSessionId": "sess_0c0cc5f9-a2e2-4085-9c53-f60da8208ad3",
         "timestamp": 1791055790377
+      }
+    ],
+    "23.1 Set up fast-check testing framework": [
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057570481
+      },
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057698859
+      }
+    ],
+    "23.2 Write property test: `cn()` last-wins conflict resolution": [
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057702451
+      },
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057850226
+      }
+    ],
+    "23.3 Write property test: `cn()` non-conflicting class preservation": [
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057703400
+      },
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057851187
+      }
+    ],
+    "23.4 Write property test: `isAdmin()` group membership correctness": [
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057704849
+      },
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057852596
+      }
+    ],
+    "23.5 Write property test: `CAM_FEEDS` key completeness": [
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057705765
+      },
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057853540
+      }
+    ],
+    "23.6 Write unit tests for constants and utilities": [
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057706774
+      },
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057854516
+      }
+    ],
+    "23. Write property-based and unit tests": [
+      {
+        "executionId": "75844742-64f6-4fd7-bfcf-79db4ee3f64f",
+        "chatSessionId": "sess_b935512f-ad75-46aa-b1e1-633e2820f1f9",
+        "timestamp": 1791057854557
+      }
+    ],
+    "24. Checkpoint — ensure all tests pass": [
+      {
+        "executionId": "87b2adba-55dd-453e-b9a4-ef04e2a2e7ae",
+        "chatSessionId": "sess_f9c8e527-5e41-4bf3-8321-4ff61003161d",
+        "timestamp": 1791058076795
+      },
+      {
+        "executionId": "87b2adba-55dd-453e-b9a4-ef04e2a2e7ae",
+        "chatSessionId": "sess_f9c8e527-5e41-4bf3-8321-4ff61003161d",
+        "timestamp": 1791058116126
       }
     ]
   }
