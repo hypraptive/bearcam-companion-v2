@@ -158,7 +158,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Confirm `amplify_outputs.json` is not tracked by git
   - _Requirements: 3.4_
 
-- [ ] 21. Checkpoint — verify TypeScript and build pass locally
+- [x] 21. Checkpoint — verify TypeScript and build pass locally
   - Run `tsc --noEmit` and confirm exit code 0 with no diagnostic errors
   - Run `next build` and confirm exit code 0
   - Confirm no `pages/` directory exists, no `tailwind.config.js` exists, and `react-icons`/`@heroicons/react`/`@fortawesome/*` are absent from `package.json`
