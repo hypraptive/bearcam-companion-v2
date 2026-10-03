@@ -165,7 +165,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Fix any type errors before proceeding — the sandbox deploy in task 22 will fail if the build is broken
   - _Requirements: 1.2, 1.3, 1.7_
 
-- [ ] 22. Deploy backend to sandbox
+- [x] 22. Deploy backend to sandbox
   - ⚠️ Requires valid AWS credentials configured in the environment
   - Run `ampx sandbox` and confirm it completes with zero errors and zero failed CloudFormation stacks
   - Confirm `amplify_outputs.json` is generated at the project root and contains non-empty values for: `aws_appsync_graphqlEndpoint`, `aws_user_pools_id`, `aws_cognito_identity_pool_id`, `aws_user_files_s3_bucket`
