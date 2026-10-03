@@ -83,7 +83,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
     - Export the result as `export const data`
     - _Requirements: 6.1, 6.11, 6.12_
 
-- [ ] 10. Write `amplify/backend.ts`
+- [x] 10. Write `amplify/backend.ts`
   - Import `auth`, `data`, and `storage` from their respective resource files
   - Call `defineBackend({ auth, data, storage })` — no other resources
   - _Requirements: 3.3_
