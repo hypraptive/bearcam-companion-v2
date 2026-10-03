@@ -63,3 +63,17 @@ The detection pipeline is intentionally abstracted to allow the underlying model
 ## Reference
 
 The Gen 1 app is at [https://github.com/hypraptive/bearcam-companion](https://github.com/hypraptive/bearcam-companion) and serves as a functional reference throughout development. Consult it for business logic, bear identification lists, and feature details, but do not copy its architecture directly.
+
+## Data Migration from v1
+
+V2 will be seeded with data from the existing Gen 1 deployment rather than starting fresh. This preserves all crowd-sourced identifications users have already submitted.
+
+The migration is a one-time script run after the v2 backend is deployed and before the app goes live. It covers:
+
+1. **S3 images** — copy or re-point to the existing S3 bucket (images themselves don't need transformation)
+2. **DynamoDB tables** — export v1 tables, transform to v2 schema, import into v2 tables
+3. **Bear registry** — seed the `Bear` table from the hardcoded bear list in v1's `SetID.js`
+4. **Consensus fields** — compute initial `consensusName`, `consensusConfidence`, and `totalVotes` on each `Object` from the existing `Identifications`
+5. **Denormalized fields** — rebuild `bearCount` and `bearList` on each `Image`
+
+The migration will be handled as a dedicated spec (`data-migration`) after the `project-setup` spec is complete. Do not design the v2 schema or Lambda logic in ways that make this migration harder — the `computeBearList` Lambda logic should be reusable by the migration script.

@@ -137,3 +137,35 @@ Each qualifying `Object` provides: `s3Key` (the image), bounding box (`width`, `
 | Consensus stored on Object | No | Yes — `consensusName`, `consensusConfidence`, `totalVotes` |
 | Data access pattern | Amplify DataStore (full offline sync) | Direct AppSync queries/mutations |
 | `Identification.user` | Cognito username string | `userId` (Cognito sub) + `userDisplayName` |
+
+## V1 → V2 Migration Mapping
+
+The following table shows how v1 DynamoDB fields map to the v2 schema. A migration script will handle the transformation — see project.md for the full migration plan.
+
+| v1 table | v1 field | v2 model | v2 field | Notes |
+|----------|----------|----------|----------|-------|
+| Images | `id` | Image | `id` | Direct copy |
+| Images | `url` | Image | `url` | Direct copy |
+| Images | `date` | Image | `date` | Direct copy |
+| Images | `file.key` | Image | `s3Key` | Flatten S3Object — use `file.key` |
+| Images | `bearCount` | Image | `bearCount` | Direct copy; recomputed by migration |
+| Images | `bearList` | Image | `bearList` | Direct copy; recomputed by migration |
+| Images | `camFeed` | Image | `camFeed` | Direct copy |
+| Objects | `id` | Object | `id` | Direct copy |
+| Objects | `label` | Object | `label` | Direct copy |
+| Objects | `confidence` | Object | `confidence` | Direct copy |
+| Objects | `width/height/left/top` | Object | `width/height/left/top` | Direct copy |
+| Objects | `imagesID` | Object | `imageId` | Rename only |
+| *(none)* | — | Object | `consensusName` | Computed from Identifications during migration |
+| *(none)* | — | Object | `consensusConfidence` | Computed during migration |
+| *(none)* | — | Object | `totalVotes` | Computed during migration |
+| Identifications | `id` | Identification | `id` | Direct copy |
+| Identifications | `name` | Identification | `name` | Direct copy |
+| Identifications | `user` | Identification | `userDisplayName` | v1 stored username; `userId` (Cognito sub) will be left null — not recoverable from v1 data |
+| Identifications | `objectsID` | Identification | `objectId` | Rename only |
+| *(none)* | — | Bear | *(all fields)* | Seed from hardcoded array in v1 `SetID.js` |
+
+**Key migration considerations**:
+- `Identification.userId` cannot be backfilled from v1 — v1 only stored the username string, not the Cognito sub. Migrated identifications will have `userId = null` and won't be editable by their original authors in v2 (they can submit a new identification instead).
+- The `Bear` table should be seeded before Identifications are migrated so that `bearId` foreign keys can be resolved from the `name` string where possible.
+- Meta-options ("Unknown", "Not a bear", etc.) should also be seeded as `Bear` records so existing Identifications referencing them resolve correctly.
