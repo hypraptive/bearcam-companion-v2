@@ -88,7 +88,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Call `defineBackend({ auth, data, storage })` — no other resources
   - _Requirements: 3.3_
 
-- [ ] 11. Write `src/lib/constants.ts`
+- [x] 11. Write `src/lib/constants.ts`
   - Export `CAM_FEEDS` as a `const` object with exactly 5 keys (`BF`, `RF`, `BFL`, `KRV`, `RW`) typed `as const satisfies Record<string, string>`
   - Export `CamFeed` type derived as `keyof typeof CAM_FEEDS`
   - Export `META_IDENTIFICATION_OPTIONS` as a readonly tuple (`as const`) with exactly these 10 entries in order: `"Not a bear"`, `"Unknown"`, `"Unknown Adult"`, `"Unknown Subadult"`, `"Known Adult"`, `"Known Subadult"`, `"Cub (COY)"`, `"Cub (1.5yo)"`, `"Cub (2.5yo)"`, `"Cub (3.5yo)"`
