@@ -6,7 +6,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
 
 ## Tasks
 
-- [ ] 1. Bootstrap the Next.js project
+- [x] 1. Bootstrap the Next.js project
   - Run `npx create-next-app@latest bearcam-companion-v2 --typescript --app --src-dir --no-tailwind --eslint --import-alias "@/*"` in the workspace root
   - Confirm the generated `tsconfig.json` has `"strict": true`; add `"noImplicitAny": true` if absent
   - Delete the generated `pages/` directory if present — App Router only
