@@ -35,7 +35,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Confirm no `tailwind.config.js` was generated (shadcn v4-compatible init uses CSS-only config)
   - _Requirements: 1.5_
 
-- [ ] 5. Install remaining frontend dependencies
+- [x] 5. Install remaining frontend dependencies
   - Run `npm install aws-amplify @aws-amplify/ui-react clsx tailwind-merge lucide-react`
   - Confirm none of `react-icons`, `@heroicons/react`, or `@fortawesome/*` appear in `package.json`
   - _Requirements: 1.5, 1.6_
