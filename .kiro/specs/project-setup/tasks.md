@@ -97,7 +97,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - This file must have zero Next.js or browser dependencies so it is safe to import from Lambda functions
   - _Requirements: 7.1, 7.2, 7.3, 7.6_
 
-- [ ] 12. Write `src/lib/utils.ts`
+- [x] 12. Write `src/lib/utils.ts`
   - Import `clsx` and `type ClassValue` from `clsx`, and `twMerge` from `tailwind-merge`
   - Export `cn(...inputs: ClassValue[]): string` that calls `twMerge(clsx(inputs))`
   - Explicit `string` return type required
