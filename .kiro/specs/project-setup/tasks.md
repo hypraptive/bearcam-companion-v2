@@ -103,7 +103,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Explicit `string` return type required
   - _Requirements: 7.4, 7.5_
 
-- [ ] 13. Write `src/lib/amplify/client.ts`
+- [x] 13. Write `src/lib/amplify/client.ts`
   - Remove the `.gitkeep` placeholder from `src/lib/amplify/` before creating files
   - Import `generateClient` from `aws-amplify/data` and `createServerRunner` from `@aws-amplify/adapter-nextjs`
   - Import `outputs` from `../../../amplify_outputs.json` and `type Schema` from `../../../amplify/data/resource`

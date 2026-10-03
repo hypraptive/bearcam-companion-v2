@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.8.0",
     "@aws-amplify/ui-react": "^6.15.7",
     "@base-ui/react": "^1.8.0",
     "@tailwindcss/postcss": "^4.3.3",
