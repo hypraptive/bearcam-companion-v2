@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.local
 
 # vercel
 .vercel
@@ -35,7 +36,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# amplify
-.amplify
+# Amplify Gen 2 — generated per environment, never committed
+amplify_outputs.json
+.amplify/
+amplify/#current-cloud-backend/
 amplify_outputs*
 amplifyconfiguration*

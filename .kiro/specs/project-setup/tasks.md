@@ -152,7 +152,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Export `metadata` with `title: 'Gallery — BearCam Companion'`
   - _Requirements: 9.2, 9.3_
 
-- [ ] 20. Update `.gitignore`
+- [x] 20. Update `.gitignore`
   - Add `amplify_outputs.json`, `.amplify/`, and `amplify/#current-cloud-backend/` to `.gitignore`
   - Add `.env*.local` and `.env.local` if not already present
   - Confirm `amplify_outputs.json` is not tracked by git
