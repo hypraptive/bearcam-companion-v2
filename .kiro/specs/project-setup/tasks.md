@@ -123,7 +123,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - Re-export `{ isAdmin }` from `./auth`
   - _Requirements: 2.8_
 
-- [ ] 16. Write `src/components/layout/nav.tsx`
+- [x] 16. Write `src/components/layout/nav.tsx`
   - Named export `Nav` (no default export) with explicit `React.JSX.Element` return type
   - Render a `<header>` with a `<Link href="/">` for the app name "BearCam Companion" and a `<Link href="/login">` for the login link
   - Use only `next/link` `<Link>` for internal navigation — no raw `<a>` tags with same-origin hrefs
