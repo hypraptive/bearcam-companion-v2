@@ -145,7 +145,7 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
   - No Amplify client configuration here — keep root layout a Server Component
   - _Requirements: 9.1, 9.4_
 
-- [ ] 19. Write `src/app/(public)/page.tsx`
+- [x] 19. Write `src/app/(public)/page.tsx`
   - Default export `GalleryPage` (required by Next.js App Router for page files)
   - No `'use client'` directive — this must be a Server Component
   - Render an `<h1>` with "BearCam Companion" and a `<p>` placeholder message indicating the gallery is coming soon
