@@ -430,6 +430,30 @@
         "executionId": "c7e82339-f8f9-4bfe-8cad-9911b74ef655",
         "chatSessionId": "sess_edbda8e6-e855-4059-a6c6-e5d2820c9b16",
         "timestamp": 1791058970805
+      },
+      {
+        "executionId": "c7e82339-f8f9-4bfe-8cad-9911b74ef655",
+        "chatSessionId": "sess_edbda8e6-e855-4059-a6c6-e5d2820c9b16",
+        "timestamp": 1791059051957
+      }
+    ],
+    "25.2 Connect the repository to Amplify Hosting": [
+      {
+        "executionId": "30f3934d-5fd4-4d59-91cb-79a4ac191eb8",
+        "chatSessionId": "sess_8d89cab7-4332-4633-b29b-c6e64abcf2d1",
+        "timestamp": 1791069119435
+      },
+      {
+        "executionId": "30f3934d-5fd4-4d59-91cb-79a4ac191eb8",
+        "chatSessionId": "sess_8d89cab7-4332-4633-b29b-c6e64abcf2d1",
+        "timestamp": 1791069123199
+      }
+    ],
+    "25.3 Verify the deployment": [
+      {
+        "executionId": "fe664d43-cfbc-42ee-8096-3d556d3e2f7d",
+        "chatSessionId": "sess_1c7d8476-06c1-4758-8a9b-0c453240e283",
+        "timestamp": 1791069171789
       }
     ]
   }

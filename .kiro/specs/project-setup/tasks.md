@@ -218,17 +218,17 @@ Bootstrap BearCam Companion v2 from an empty repository to a deployed skeleton o
 
 - [x] 25. Connect repository to Amplify Hosting and verify deployment
   - ⚠️ Requires AWS console access and a pushed git repository
-  - [-] 25.1 Push the repository to GitHub (or your git provider of choice)
+  - [x] 25.1 Push the repository to GitHub (or your git provider of choice)
     - Ensure `.gitignore` is committed and `amplify_outputs.json` is not tracked
     - Push the `main` branch
     - _Requirements: 10.1_
-  - [ ] 25.2 Connect the repository to Amplify Hosting
+  - [x] 25.2 Connect the repository to Amplify Hosting
     - In the AWS Amplify console: **Create new app → From git repository**
     - Select the repository and `main` branch; confirm Amplify detects Next.js and sets `next build` as the build command
     - Do not manually add `amplify_outputs.json` — Amplify Hosting injects it via `ampx pipeline-deploy` at build time
     - Confirm the `amplify.yml` build spec runs `npx ampx pipeline-deploy` in the backend phase before the frontend build
     - _Requirements: 10.1, 10.4_
-  - [ ] 25.3 Verify the deployment
+  - [x] 25.3 Verify the deployment
     - Confirm the build completes within 15 minutes and the deployment is marked successful in the Amplify console
     - Confirm the Gallery_Page is served at the root URL over HTTPS and returns HTTP 200
     - Confirm a unique deployment URL is provisioned for the `main` branch
