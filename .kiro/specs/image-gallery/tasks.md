@@ -68,7 +68,7 @@ properties from the design are covered.
     - Generator: `fc.array(fc.string())` joined with commas + non-empty term; assert match iff some token contains term case-insensitively and no cross-comma match
     - `// Feature: image-gallery, Property 4: ...`
 
-  - [-] 3.3 Write property test for empty/whitespace search behaving as cleared
+  - [x] 3.3 Write property test for empty/whitespace search behaving as cleared
     - **Property 5: Empty/whitespace search matches like a cleared search**
     - **Validates: Requirements 3.6, 3.7**
     - Generator: arbitrary `bearList` + empty/all-whitespace term normalized to `''`; assert filtering is governed only by remaining filters
