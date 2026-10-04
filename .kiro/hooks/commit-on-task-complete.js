@@ -8,17 +8,25 @@
  *   - the cwd is not a git repository, or
  *   - there is nothing to commit.
  *
- * The task title is pulled from the stdin payload (keys tried in order:
- * taskName, taskId, task.name, task.title, task.id). The leading task number
- * (e.g. "2.1 ") and surrounding markdown backticks are stripped so the commit
- * subject reads cleanly, then it is capped at 72 characters.
+ * How the task title is resolved:
+ *   The PostTaskExec stdin payload reliably carries `session_id` (and
+ *   `hook_event_name`) but does NOT carry the task title directly. Kiro records
+ *   each task execution in ~/.kiro/tasks/<hash>/<spec>.meta.json, where every
+ *   task entry has an `executionHistory` of { chatSessionId, timestamp }. We
+ *   look up the task whose most recent execution matches our `session_id` and
+ *   use its title (the task heading, e.g. "2.5 Write unit tests ..."). The
+ *   leading task number and markdown backticks are stripped, then the subject
+ *   is capped at 72 characters.
  */
 
 const { execFileSync } = require("node:child_process");
+const fs = require("node:fs");
+const path = require("node:path");
+const os = require("node:os");
 
 function readStdin() {
   try {
-    return require("node:fs").readFileSync(0, "utf8");
+    return fs.readFileSync(0, "utf8");
   } catch {
     return "";
   }
@@ -37,10 +45,67 @@ function gitQuietExitCode(args) {
   }
 }
 
-function pick(obj, path) {
-  return path
-    .split(".")
-    .reduce((o, k) => (o && typeof o === "object" ? o[k] : undefined), obj);
+/**
+ * Find the task title whose execution history matches the given chat session id,
+ * scanning all per-spec task metadata files under ~/.kiro/tasks. When a session
+ * ran more than one task, the one with the newest matching timestamp wins.
+ */
+function findTaskTitleBySession(sessionId) {
+  if (!sessionId) return undefined;
+  const tasksDir = path.join(os.homedir(), ".kiro", "tasks");
+  let best;
+  let bestTs = -Infinity;
+
+  let subdirs;
+  try {
+    subdirs = fs.readdirSync(tasksDir);
+  } catch {
+    return undefined;
+  }
+
+  for (const sub of subdirs) {
+    const subPath = path.join(tasksDir, sub);
+    let files;
+    try {
+      if (!fs.statSync(subPath).isDirectory()) continue;
+      files = fs.readdirSync(subPath);
+    } catch {
+      continue;
+    }
+    for (const file of files) {
+      if (!file.endsWith(".meta.json")) continue;
+      let json;
+      try {
+        json = JSON.parse(fs.readFileSync(path.join(subPath, file), "utf8"));
+      } catch {
+        continue;
+      }
+      const tasks = (json && json.tasks) || {};
+      for (const [title, task] of Object.entries(tasks)) {
+        for (const h of (task && task.executionHistory) || []) {
+          if (h && h.chatSessionId === sessionId) {
+            const ts = typeof h.timestamp === "number" ? h.timestamp : 0;
+            if (ts >= bestTs) {
+              bestTs = ts;
+              best = task.taskId || title;
+            }
+          }
+        }
+      }
+    }
+  }
+  return best;
+}
+
+function cleanSubject(title) {
+  if (!title) return "Complete task";
+  // Strip a leading task number like "2.1 " or "15. ".
+  let s = title.replace(/^\d+(\.\d+)*[.)]?\s+/, "");
+  // Drop markdown backticks used around code identifiers.
+  s = s.replace(/`/g, "");
+  // Collapse whitespace and cap length for a clean subject line.
+  s = s.replace(/\s+/g, " ").trim().slice(0, 72);
+  return s || "Complete task";
 }
 
 function deriveSubject(raw) {
@@ -51,37 +116,9 @@ function deriveSubject(raw) {
     payload = null;
   }
 
-  let title;
-  if (payload) {
-    const candidates = [
-      "taskName",
-      "taskId",
-      "task.name",
-      "task.title",
-      "task.id",
-      "name",
-    ];
-    for (const key of candidates) {
-      const val = pick(payload, key);
-      if (typeof val === "string" && val.trim()) {
-        title = val.trim();
-        break;
-      }
-    }
-  }
-
-  // Fall back to the raw payload text if no recognized field was found.
-  if (!title) title = raw.replace(/\s+/g, " ").trim();
-  if (!title) return "Complete task";
-
-  // Strip a leading task number like "2.1 " or "15. ".
-  title = title.replace(/^\d+(\.\d+)*[.)]?\s+/, "");
-  // Drop markdown backticks used around code identifiers.
-  title = title.replace(/`/g, "");
-  // Collapse whitespace and cap length for a clean subject line.
-  title = title.replace(/\s+/g, " ").trim().slice(0, 72);
-
-  return title || "Complete task";
+  const sessionId = payload && (payload.session_id || payload.sessionId);
+  const title = findTaskTitleBySession(sessionId);
+  return cleanSubject(title);
 }
 
 function main() {
