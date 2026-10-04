@@ -19,39 +19,39 @@ properties from the design are covered.
 
 ## Tasks
 
-- [ ] 1. Scaffold gallery module structure and shared types
+- [x] 1. Scaffold gallery module structure and shared types
   - Create `src/lib/gallery/` and `src/lib/bears/` directories
   - In `src/lib/gallery/query-state.ts`, define and export the `PAGE_SIZE` (24), `MAX_SEARCH_LENGTH` (100), and `BEAR_PRESENCE_VALUES` constants, the `BearPresence` and `QueryState` types, and the `DEFAULT_QUERY_STATE` constant, importing `CamFeed` from `@/lib/constants`
   - Add function signatures (no bodies yet) for `parseQueryState`, `toSearchParams`, `clampPage`, and `normalizeSearchTerm` with explicit return types
   - _Requirements: 6.1, 1.2, 3.1_
 
-- [ ] 2. Implement the Query_State module (`src/lib/gallery/query-state.ts`)
-  - [ ] 2.1 Implement `parseQueryState`, `toSearchParams`, `clampPage`, and `normalizeSearchTerm`
+- [~] 2. Implement the Query_State module (`src/lib/gallery/query-state.ts`)
+  - [x] 2.1 Implement `parseQueryState`, `toSearchParams`, `clampPage`, and `normalizeSearchTerm`
     - `parseQueryState` never throws and never emits an invalid field: unrecognized `feed`, non-recognized `bears`, non-integer/`<1` `page`, non-positive `year`, and over-length `q` each fall back to their default; trim `q` and drop empty/whitespace to `''`
     - `toSearchParams` omits default-valued keys so `DEFAULT_QUERY_STATE` serializes to an empty query string
     - `clampPage` clamps a 1-based page to `[1, max(totalPages, 1)]`
     - `normalizeSearchTerm` trims, treats empty/whitespace as cleared, and returns `{ ok: false, reason: 'too-long' }` when the trimmed term exceeds `MAX_SEARCH_LENGTH`
     - _Requirements: 6.1, 6.5, 6.6, 3.1, 3.7, 3.8_
 
-  - [ ]* 2.2 Write property test for Query_State round-trip
+  - [ ] 2.2 Write property test for Query_State round-trip
     - **Property 1: Query_State serialize/parse round-trip**
     - **Validates: Requirements 6.1, 6.3, 6.4**
     - Generator: `fc.record` over valid `QueryState`; assert `parseQueryState(Object.fromEntries(toSearchParams(state)))` deep-equals the original
     - `// Feature: image-gallery, Property 1: ...`
 
-  - [ ]* 2.3 Write property test for parse-never-invalid
+  - [ ] 2.3 Write property test for parse-never-invalid
     - **Property 2: Parsing never yields an invalid Query_State**
     - **Validates: Requirements 6.5, 3.7, 3.8**
     - Generator: arbitrary record of raw string param values incl. malformed/over-length; assert `feed`, `bears`, `q` length, `year`, `page` all in-range and no throw
     - `// Feature: image-gallery, Property 2: ...`
 
-  - [ ]* 2.4 Write property test for page clamping
+  - [ ] 2.4 Write property test for page clamping
     - **Property 3: Page clamping stays in range**
     - **Validates: Requirements 6.6**
     - Generator: `fc.integer()` page and `fc.integer({ min: 0 })` totalPages; assert `1 <= r <= max(totalPages,1)` and boundary behavior
     - `// Feature: image-gallery, Property 3: ...`
 
-  - [ ]* 2.5 Write unit tests for parse/normalize edge cases
+  - [ ] 2.5 Write unit tests for parse/normalize edge cases
     - Empty params → default; `?page=0` → 1; `?feed=XX` → null; `q` of exactly 100 vs 101 chars
     - _Requirements: 6.5, 3.8_
 

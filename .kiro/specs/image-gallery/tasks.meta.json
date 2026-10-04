@@ -1,0 +1,29 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Scaffold gallery module structure and shared types": [
+      {
+        "executionId": "11b90b06-33ea-46a8-a3c2-b943f7b7a514",
+        "chatSessionId": "sess_5004a4e6-39d8-4e13-bd31-ff128b5efab3",
+        "timestamp": 1791074989388
+      },
+      {
+        "executionId": "11b90b06-33ea-46a8-a3c2-b943f7b7a514",
+        "chatSessionId": "sess_5004a4e6-39d8-4e13-bd31-ff128b5efab3",
+        "timestamp": 1791075127684
+      }
+    ],
+    "2.1 Implement `parseQueryState`, `toSearchParams`, `clampPage`, and `normalizeSearchTerm`": [
+      {
+        "executionId": "226075e6-7f6e-4c86-8532-c8ab56929f04",
+        "chatSessionId": "sess_d0c80ad0-6e25-42e4-bcc8-24c4b9392eb3",
+        "timestamp": 1791075441856
+      },
+      {
+        "executionId": "226075e6-7f6e-4c86-8532-c8ab56929f04",
+        "chatSessionId": "sess_d0c80ad0-6e25-42e4-bcc8-24c4b9392eb3",
+        "timestamp": 1791075543567
+      }
+    ]
+  }
+}
