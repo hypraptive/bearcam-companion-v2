@@ -4,12 +4,12 @@
     {
       "name": "Commit Code on Task Complete",
       "trigger": "PostTaskExec",
-      "description": "After a spec task completes, stage all changes and commit them to the current feature branch. The commit subject is derived from the task's title in the spec (leading task number and backticks stripped). Skips cleanly when there is nothing to commit or outside a git repo.",
       "action": {
-        "type": "command",
-        "command": "node .kiro/hooks/commit-on-task-complete.js",
-        "timeout": 60
-      }
+        "type": "agent",
+        "prompt": "commit changes from this task."
+      },
+      "description": "After a spec task completes, stage all changes and commit them to the current feature branch. The commit subject is derived from the task's title in the spec (leading task number and backticks stripped). Skips cleanly when there is nothing to commit or outside a git repo.",
+      "enabled": true
     }
   ]
 }
