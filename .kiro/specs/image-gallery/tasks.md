@@ -25,7 +25,7 @@ properties from the design are covered.
   - Add function signatures (no bodies yet) for `parseQueryState`, `toSearchParams`, `clampPage`, and `normalizeSearchTerm` with explicit return types
   - _Requirements: 6.1, 1.2, 3.1_
 
-- [~] 2. Implement the Query_State module (`src/lib/gallery/query-state.ts`)
+- [x] 2. Implement the Query_State module (`src/lib/gallery/query-state.ts`)
   - [x] 2.1 Implement `parseQueryState`, `toSearchParams`, `clampPage`, and `normalizeSearchTerm`
     - `parseQueryState` never throws and never emits an invalid field: unrecognized `feed`, non-recognized `bears`, non-integer/`<1` `page`, non-positive `year`, and over-length `q` each fall back to their default; trim `q` and drop empty/whitespace to `''`
     - `toSearchParams` omits default-valued keys so `DEFAULT_QUERY_STATE` serializes to an empty query string
@@ -51,7 +51,7 @@ properties from the design are covered.
     - Generator: `fc.integer()` page and `fc.integer({ min: 0 })` totalPages; assert `1 <= r <= max(totalPages,1)` and boundary behavior
     - `// Feature: image-gallery, Property 3: ...`
 
-  - [ ] 2.5 Write unit tests for parse/normalize edge cases
+  - [x] 2.5 Write unit tests for parse/normalize edge cases
     - Empty params → default; `?page=0` → 1; `?feed=XX` → null; `q` of exactly 100 vs 101 chars
     - _Requirements: 6.5, 3.8_
 

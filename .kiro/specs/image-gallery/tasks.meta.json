@@ -73,6 +73,25 @@
         "chatSessionId": "sess_afcdccd1-c243-4b05-81e1-b164a826f133",
         "timestamp": 1791076550329
       }
+    ],
+    "2.5 Write unit tests for parse/normalize edge cases": [
+      {
+        "executionId": "9ecd715f-db96-4176-80d8-b36f1b2b4f94",
+        "chatSessionId": "sess_ee0a4d0a-b068-47a8-8abc-a30fa3a34ec5",
+        "timestamp": 1791077205875
+      },
+      {
+        "executionId": "9ecd715f-db96-4176-80d8-b36f1b2b4f94",
+        "chatSessionId": "sess_ee0a4d0a-b068-47a8-8abc-a30fa3a34ec5",
+        "timestamp": 1791077268408
+      }
+    ],
+    "2. Implement the Query_State module (`src/lib/gallery/query-state.ts`)": [
+      {
+        "executionId": "9ecd715f-db96-4176-80d8-b36f1b2b4f94",
+        "chatSessionId": "sess_ee0a4d0a-b068-47a8-8abc-a30fa3a34ec5",
+        "timestamp": 1791077268459
+      }
     ]
   }
 }
