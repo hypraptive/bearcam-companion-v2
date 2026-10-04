@@ -74,7 +74,7 @@ properties from the design are covered.
     - Generator: arbitrary `bearList` + empty/all-whitespace term normalized to `''`; assert filtering is governed only by remaining filters
     - `// Feature: image-gallery, Property 5: ...`
 
-  - [-] 3.4 Write property test for UTC year bounds
+  - [x] 3.4 Write property test for UTC year bounds
     - **Property 6: UTC year bounds are inclusive and exclusive of neighbors**
     - **Validates: Requirements 2.5**
     - Generator: calendar year + UTC-bounded instants incl. `year-1`/`year+1` edges; assert inclusive bounds and neighbor exclusion
