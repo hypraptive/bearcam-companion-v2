@@ -1,5 +1,18 @@
 {
-  "pbtResults": {},
+  "pbtResults": {
+    "2.2 Write property test for Query_State round-trip": {
+      "status": "passed",
+      "lastRunTimestamp": 1791075958565
+    },
+    "2.3 Write property test for parse-never-invalid": {
+      "status": "passed",
+      "lastRunTimestamp": 1791076075235
+    },
+    "2.4 Write property test for page clamping": {
+      "status": "passed",
+      "lastRunTimestamp": 1791076540573
+    }
+  },
   "executionHistory": {
     "1. Scaffold gallery module structure and shared types": [
       {
@@ -23,6 +36,42 @@
         "executionId": "226075e6-7f6e-4c86-8532-c8ab56929f04",
         "chatSessionId": "sess_d0c80ad0-6e25-42e4-bcc8-24c4b9392eb3",
         "timestamp": 1791075543567
+      }
+    ],
+    "2.2 Write property test for Query_State round-trip": [
+      {
+        "executionId": "95374ddb-e58e-464c-8380-b4fad13d6fc4",
+        "chatSessionId": "sess_9e1b7a65-729c-49dd-83d6-63b56a172590",
+        "timestamp": 1791075888502
+      },
+      {
+        "executionId": "95374ddb-e58e-464c-8380-b4fad13d6fc4",
+        "chatSessionId": "sess_9e1b7a65-729c-49dd-83d6-63b56a172590",
+        "timestamp": 1791075970325
+      }
+    ],
+    "2.3 Write property test for parse-never-invalid": [
+      {
+        "executionId": "c3683d95-dafb-4a79-b1e8-aa8e38f86f04",
+        "chatSessionId": "sess_41697814-d440-4892-93ad-4da3c6fa2798",
+        "timestamp": 1791076012099
+      },
+      {
+        "executionId": "c3683d95-dafb-4a79-b1e8-aa8e38f86f04",
+        "chatSessionId": "sess_41697814-d440-4892-93ad-4da3c6fa2798",
+        "timestamp": 1791076167355
+      }
+    ],
+    "2.4 Write property test for page clamping": [
+      {
+        "executionId": "e0fc7c00-738c-4506-928e-9c07241e6d00",
+        "chatSessionId": "sess_afcdccd1-c243-4b05-81e1-b164a826f133",
+        "timestamp": 1791076490875
+      },
+      {
+        "executionId": "e0fc7c00-738c-4506-928e-9c07241e6d00",
+        "chatSessionId": "sess_afcdccd1-c243-4b05-81e1-b164a826f133",
+        "timestamp": 1791076550329
       }
     ]
   }

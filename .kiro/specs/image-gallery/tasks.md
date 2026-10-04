@@ -33,19 +33,19 @@ properties from the design are covered.
     - `normalizeSearchTerm` trims, treats empty/whitespace as cleared, and returns `{ ok: false, reason: 'too-long' }` when the trimmed term exceeds `MAX_SEARCH_LENGTH`
     - _Requirements: 6.1, 6.5, 6.6, 3.1, 3.7, 3.8_
 
-  - [ ] 2.2 Write property test for Query_State round-trip
+  - [x] 2.2 Write property test for Query_State round-trip
     - **Property 1: Query_State serialize/parse round-trip**
     - **Validates: Requirements 6.1, 6.3, 6.4**
     - Generator: `fc.record` over valid `QueryState`; assert `parseQueryState(Object.fromEntries(toSearchParams(state)))` deep-equals the original
     - `// Feature: image-gallery, Property 1: ...`
 
-  - [ ] 2.3 Write property test for parse-never-invalid
+  - [x] 2.3 Write property test for parse-never-invalid
     - **Property 2: Parsing never yields an invalid Query_State**
     - **Validates: Requirements 6.5, 3.7, 3.8**
     - Generator: arbitrary record of raw string param values incl. malformed/over-length; assert `feed`, `bears`, `q` length, `year`, `page` all in-range and no throw
     - `// Feature: image-gallery, Property 2: ...`
 
-  - [ ] 2.4 Write property test for page clamping
+  - [x] 2.4 Write property test for page clamping
     - **Property 3: Page clamping stays in range**
     - **Validates: Requirements 6.6**
     - Generator: `fc.integer()` page and `fc.integer({ min: 0 })` totalPages; assert `1 <= r <= max(totalPages,1)` and boundary behavior
