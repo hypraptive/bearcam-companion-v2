@@ -62,25 +62,25 @@ properties from the design are covered.
     - `matchesBearPresence`: `any` always true; `with` iff `bearCount >= 1`; `without` iff `bearCount === 0`
     - _Requirements: 3.2, 2.5, 2.7, 2.8, 2.9_
 
-  - [ ] 3.2 Write property test for comma-scoped case-insensitive search
+  - [x] 3.2 Write property test for comma-scoped case-insensitive search
     - **Property 4: bearList search is comma-token-scoped and case-insensitive**
     - **Validates: Requirements 3.2**
     - Generator: `fc.array(fc.string())` joined with commas + non-empty term; assert match iff some token contains term case-insensitively and no cross-comma match
     - `// Feature: image-gallery, Property 4: ...`
 
-  - [ ] 3.3 Write property test for empty/whitespace search behaving as cleared
+  - [-] 3.3 Write property test for empty/whitespace search behaving as cleared
     - **Property 5: Empty/whitespace search matches like a cleared search**
     - **Validates: Requirements 3.6, 3.7**
     - Generator: arbitrary `bearList` + empty/all-whitespace term normalized to `''`; assert filtering is governed only by remaining filters
     - `// Feature: image-gallery, Property 5: ...`
 
-  - [ ] 3.4 Write property test for UTC year bounds
+  - [-] 3.4 Write property test for UTC year bounds
     - **Property 6: UTC year bounds are inclusive and exclusive of neighbors**
     - **Validates: Requirements 2.5**
     - Generator: calendar year + UTC-bounded instants incl. `year-1`/`year+1` edges; assert inclusive bounds and neighbor exclusion
     - `// Feature: image-gallery, Property 6: ...`
 
-  - [ ] 3.5 Write property test for bear-presence partition
+  - [-] 3.5 Write property test for bear-presence partition
     - **Property 7: Bear-presence predicate partitions by bearCount**
     - **Validates: Requirements 2.7, 2.8, 2.9**
     - Generator: `fc.integer({ min: 0 })` bearCount; assert `with`/`without` mutually exclusive and jointly exhaustive, `any` always true
