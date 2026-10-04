@@ -17,7 +17,8 @@
 | Layer | Choice | Notes |
 |-------|--------|-------|
 | Platform | **AWS Amplify Gen 2** | TypeScript/CDK-first. Backend defined in `amplify/` directory. |
-| API | **AWS AppSync (GraphQL)** | Defined via `defineData()` in Amplify Gen 2. Direct queries/mutations — no DataStore. |
+| API (data) | **AWS AppSync (GraphQL)** | Defined via `defineData()` in Amplify Gen 2. Direct queries/mutations — no DataStore. |
+| API (ingestion) | **Amazon API Gateway (REST)** | `POST /ingest` → `ingest-image` Lambda. Defined as a CDK construct in `backend.ts`. Serves the admin UI (Cognito authorizer) and external callers (API key + usage plan) from one endpoint. |
 | Auth | **Amazon Cognito** | User Pool + Identity Pool via `defineAuth()`. One user group: `admin`. |
 | Storage | **Amazon S3** | Webcam images stored under `public/` prefix via `defineStorage()`. |
 | Functions | **AWS Lambda (Node.js 20.x)** | Defined via `defineFunction()`. TypeScript source. |

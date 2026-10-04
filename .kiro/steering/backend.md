@@ -24,9 +24,16 @@ amplify/
 
 ### `ingest-image`
 
-**Trigger**: HTTP (called from admin UI via Amplify REST API or AppSync mutation) — manual initially, EventBridge scheduled later.
+**Invocation**: **API Gateway (REST)** → Lambda. A single endpoint (`POST /ingest`) serves multiple caller types. Chosen over a native AppSync mutation because external exposure requires per-caller API keys, usage plans, rate limiting, and throttling — all of which API Gateway provides out of the box and AppSync does not.
 
-**Inputs**: `{ feed: CamFeed, url?: string, date?: string }`
+**Callers and auth** (configured per-method on the same route):
+- **Admin UI** — Cognito User Pool authorizer (the signed-in admin's token)
+- **External callers** — API Gateway API key tied to a usage plan (revocable, rate-limited, throttled, usage-tracked)
+- **EventBridge scheduling (future)** — a scheduled rule invoking the same endpoint or the Lambda directly; no new work required because the handler is invocation-agnostic
+
+**Handler architecture** (required): The Lambda's core logic must be a pure function with the signature `ingestImage({ feed, url?, date? }): Promise<IngestResult>`, with a thin adapter layer that parses the incoming event (API Gateway proxy event now; AppSync resolver event or EventBridge event later) into that normalized input. Business logic must never read the raw event shape directly — this keeps all invocation paths open and makes the function testable without constructing a full API Gateway event.
+
+**Inputs** (normalized): `{ feed: CamFeed, url?: string, date?: string }`
 - If `url` is provided: upload that specific explore.org snapshot
 - If only `feed` is provided: fetch the latest snapshot for that feed
 
@@ -58,6 +65,14 @@ When scheduling is set up via EventBridge, set `INGEST_MAX_AGE_MINUTES` to a val
 - `AMPLIFY_DATA_GRAPHQL_ENDPOINT` — injected by Amplify Gen 2
 - `AMPLIFY_STORAGE_BUCKET_NAME` — injected by Amplify Gen 2
 - `INGEST_MAX_AGE_MINUTES` — configurable, default `10`
+
+**API Gateway setup**:
+- Defined as a CDK construct in `amplify/backend.ts` (Amplify Gen 2 exposes the underlying CDK stack for resources without a native `define*` helper)
+- Route: `POST /ingest`, accepting a JSON body `{ feed, url?, date? }`
+- Two authorizers on the route: a Cognito User Pool authorizer (admin UI) and API key + usage plan (external callers)
+- Usage plan sets throttling and quota limits; API keys are issued per external caller and are independently revocable
+- Enable CORS for the admin UI origin(s) only
+- Return structured JSON responses with appropriate HTTP status codes (200 success, 4xx client errors, 5xx for explore.org/S3 failures)
 
 **Notes**:
 - The explore.org API endpoint and feed slug mapping live in `src/lib/constants.ts` (frontend) and are duplicated in a shared constants file importable by Lambda. Keep them in sync.
