@@ -55,7 +55,7 @@ properties from the design are covered.
     - Empty params → default; `?page=0` → 1; `?feed=XX` → null; `q` of exactly 100 vs 101 chars
     - _Requirements: 6.5, 3.8_
 
-- [~] 3. Implement the search/filter logic module (`src/lib/gallery/filter.ts`)
+- [x] 3. Implement the search/filter logic module (`src/lib/gallery/filter.ts`)
   - [x] 3.1 Implement `bearListMatches`, `isInUtcYear`, and `matchesBearPresence`
     - `bearListMatches`: split `bearList` on commas, return true iff at least one token contains `term` as a case-insensitive substring, never spanning the comma; empty/undefined `bearList` never matches a non-empty term
     - `isInUtcYear`: true iff instant is within `[year-01-01T00:00:00.000Z, year-12-31T23:59:59.999Z]`
@@ -80,7 +80,7 @@ properties from the design are covered.
     - Generator: calendar year + UTC-bounded instants incl. `year-1`/`year+1` edges; assert inclusive bounds and neighbor exclusion
     - `// Feature: image-gallery, Property 6: ...`
 
-  - [-] 3.5 Write property test for bear-presence partition
+  - [x] 3.5 Write property test for bear-presence partition
     - **Property 7: Bear-presence predicate partitions by bearCount**
     - **Validates: Requirements 2.7, 2.8, 2.9**
     - Generator: `fc.integer({ min: 0 })` bearCount; assert `with`/`without` mutually exclusive and jointly exhaustive, `any` always true
