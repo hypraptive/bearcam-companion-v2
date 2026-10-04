@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Create Feature Branch on Task Start",
+      "trigger": "PreTaskExec",
+      "description": "When a spec task is about to start, create and switch to a feature branch (if not already on one) named after the current spec/feature, following the feature/<short-description> convention.",
+      "action": {
+        "type": "command",
+        "command": "sh -c 'input=$(cat); branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -z \"$branch\" ]; then echo \"Not a git repository; skipping branch creation.\" >&2; exit 0; fi; case \"$branch\" in feature/*) echo \"Already on feature branch: $branch\"; exit 0;; esac; if git diff --quiet && git diff --cached --quiet; then :; else echo \"Working tree has uncommitted changes on $branch. Commit or stash before starting a new feature branch.\" >&2; exit 2; fi; slug=$(printf \"%s\" \"$input\" | tr \"[:upper:]\" \"[:lower:]\" | sed -E \"s/[^a-z0-9]+/-/g; s/^-+//; s/-+$//\" | cut -c1-40); [ -z \"$slug\" ] && slug=\"new-feature\"; new=\"feature/$slug\"; if git show-ref --verify --quiet \"refs/heads/$new\"; then git switch \"$new\" && echo \"Switched to existing branch $new\"; else git switch -c \"$new\" && echo \"Created and switched to $new\"; fi'",
+        "timeout": 30
+      }
+    }
+  ]
+}

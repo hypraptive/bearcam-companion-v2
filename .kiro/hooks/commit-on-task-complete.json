@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Commit Code on Task Complete",
+      "trigger": "PostTaskExec",
+      "description": "After a spec task completes, stage all changes and commit them to the current feature branch with a message derived from the task context. Skips cleanly when there is nothing to commit.",
+      "action": {
+        "type": "command",
+        "command": "sh -c 'input=$(cat); branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -z \"$branch\" ]; then echo \"Not a git repository; skipping commit.\" >&2; exit 0; fi; if git diff --quiet && git diff --cached --quiet; then echo \"No changes to commit on $branch.\"; exit 0; fi; subject=$(printf \"%s\" \"$input\" | tr \"\\n\" \" \" | sed -E \"s/^[[:space:]]+//; s/[[:space:]]+$//\" | cut -c1-72); [ -z \"$subject\" ] && subject=\"Complete task\"; git add -A && git commit -m \"$subject\" && echo \"Committed changes on $branch: $subject\"'",
+        "timeout": 60
+      }
+    }
+  ]
+}
