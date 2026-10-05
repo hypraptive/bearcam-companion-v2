@@ -238,6 +238,18 @@
         "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
         "timestamp": 1791168382122
       }
+    ],
+    "5.2 Add `matchesFilter(image, filter)` combined predicate to `src/lib/gallery/filter.ts`": [
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791168391272
+      },
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170586050
+      }
     ]
   }
 }

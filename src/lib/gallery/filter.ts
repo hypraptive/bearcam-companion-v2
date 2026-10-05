@@ -8,6 +8,7 @@
  * client-side filter and any residual matching in the AppSync helpers.
  */
 
+import type { CamFeed } from '@/lib/constants';
 import type { BearPresence } from './query-state';
 
 /**
@@ -66,4 +67,64 @@ export function matchesBearPresence(
   if (bears === 'with') return count >= 1;
   // bears === 'without'
   return count === 0;
+}
+
+/**
+ * QueryState-aligned filter shape for the in-memory `matchesFilter` predicate
+ * (Req 2.10, 3.3).
+ *
+ * NOTE: There are intentionally two distinct `GalleryFilter` concerns in this
+ * feature, kept separate on purpose:
+ *   1. THIS shape (year: number | null, feed: CamFeed | null) mirrors the
+ *      normalized `QueryState` and is used to filter already-materialized image
+ *      records in memory.
+ *   2. The AppSync-helper layer (task 8, `src/lib/amplify/gallery.ts`) defines a
+ *      different `GalleryFilter` with a `yearRange`/`camFeed` shape tailored to
+ *      the DynamoDB `between`/`eq` query predicates.
+ * The two layers have different concerns — a UTC year number vs. precomputed ISO
+ * bounds — so they deliberately do not share a type. This pure predicate stays
+ * decoupled from the AppSync query shape.
+ */
+export type GalleryFilter = {
+  year: number | null; // null = all years (inactive)
+  feed: CamFeed | null; // null = all feeds (inactive)
+  bears: BearPresence; // 'any' = inactive
+  q: string; // '' (trimmed) = no search (inactive)
+};
+
+/**
+ * Minimal structural view of an `Image` read by `matchesFilter`. Typed by the
+ * fields it actually reads so the predicate works against the generated
+ * `Schema['Image']['type']` (which is structurally compatible) without a hard
+ * dependency on the Amplify data layer — keeping this module pure and
+ * independently testable (Req 6.1).
+ */
+export type FilterableImage = {
+  date: string | null | undefined;
+  camFeed: CamFeed | null | undefined;
+  bearCount: number | null | undefined;
+  bearList: string | null | undefined;
+};
+
+/**
+ * Combined gallery predicate: an image is included iff it passes the year AND
+ * feed AND bear-presence AND search filters (Req 2.10, 3.3). Each inactive
+ * filter is treated as always-true, so an all-default filter matches every
+ * image:
+ * - year: `null` → always true; otherwise reuse `isInUtcYear(date, year)`.
+ * - feed: `null` → always true; otherwise exact `camFeed === feed` equality.
+ * - bear-presence: reuse `matchesBearPresence(bearCount, bears)` ('any' is
+ *   always true).
+ * - search: trimmed `q === ''` → always true; otherwise reuse
+ *   `bearListMatches(bearList, q)`.
+ *
+ * Pure composition of the existing predicates — no new matching semantics are
+ * introduced here.
+ */
+export function matchesFilter(image: FilterableImage, filter: GalleryFilter): boolean {
+  const yearOk = filter.year === null || isInUtcYear(image.date, filter.year);
+  const feedOk = filter.feed === null || image.camFeed === filter.feed;
+  const bearsOk = matchesBearPresence(image.bearCount, filter.bears);
+  const searchOk = filter.q.trim() === '' || bearListMatches(image.bearList, filter.q);
+  return yearOk && feedOk && bearsOk && searchOk;
 }

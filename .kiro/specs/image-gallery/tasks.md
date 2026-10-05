@@ -114,7 +114,7 @@ properties from the design are covered.
     - `applyClear` returns exactly `DEFAULT_QUERY_STATE`
     - _Requirements: 2.12, 3.4, 2.13_
 
-  - [ ] 5.2 Add `matchesFilter(image, filter)` combined predicate to `src/lib/gallery/filter.ts`
+  - [x] 5.2 Add `matchesFilter(image, filter)` combined predicate to `src/lib/gallery/filter.ts`
     - Combine year, feed, bear-presence, and search predicates with logical AND, treating each inactive filter as always-true, reusing `isInUtcYear`, `matchesBearPresence`, and `bearListMatches`
     - _Requirements: 2.10, 3.3_
 
