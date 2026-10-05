@@ -139,7 +139,7 @@ properties from the design are covered.
 - [x] 6. Checkpoint - pure logic layer
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 7. Add the `Image` secondary index with documented scan fallback
+- [x] 7. Add the `Image` secondary index with documented scan fallback
   - [ ] 7.1 Add the secondary index(es) to the `Image` model in `amplify/data/resource.ts`
     - Add `camFeed`-hash / `date`-sort index (`imagesByFeedAndDate`) and a constant-partition index for global `date desc` ordering, per the design's Data Models section
     - This file is owned by `project-setup`; add the index additively without altering existing auth rules or fields, and leave an inline comment noting the cross-spec ownership and the scan + per-page stable-sort `(date desc, id desc)` fallback the helpers must use if the index is unavailable

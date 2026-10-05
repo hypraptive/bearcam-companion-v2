@@ -305,6 +305,18 @@
         "chatSessionId": "sess_fe8cbb5e-4026-4f4c-b4d1-52464c291941",
         "timestamp": 1791170858728
       }
+    ],
+    "7. Add the `Image` secondary index with documented scan fallback": [
+      {
+        "executionId": "804601f8-3280-4f4c-a494-a6c4525459c4",
+        "chatSessionId": "sess_d384412d-90c9-4c89-8ec3-20bf8219502e",
+        "timestamp": 1791170972474
+      },
+      {
+        "executionId": "804601f8-3280-4f4c-a494-a6c4525459c4",
+        "chatSessionId": "sess_d384412d-90c9-4c89-8ec3-20bf8219502e",
+        "timestamp": 1791171090023
+      }
     ]
   }
 }

@@ -31,8 +31,36 @@ const schema = a.schema({
       bearCount: a.integer(),
       bearList: a.string(),
       camFeed: a.enum(['BF', 'RF', 'BFL', 'KRV', 'RW']),
+      // Cross-spec dependency: this file is OWNED BY `project-setup`. The field
+      // below and the secondary indexes were added ADDITIVELY by the
+      // `image-gallery` spec (task 7). No existing fields or auth rules were
+      // changed. `gsiPartition` is a constant-partition key: every Image row
+      // sets it to the same fixed value (see the compute-bear-list / ingest
+      // writers) so a single GSI can order ALL images by `date` globally.
+      gsiPartition: a.string(),
       objects: a.hasMany('Object', 'imageId'),
     })
+    // Secondary indexes consumed by the `image-gallery` AppSync read helpers
+    // (`src/lib/amplify/gallery.ts`). Added additively by `image-gallery`;
+    // `project-setup` owns this file.
+    //
+    //   - `imagesByFeedAndDate`: hash = camFeed, sort = date. Used when a feed
+    //     filter is active, queried with `sortDirection: 'DESC'`.
+    //   - `imagesByDate`: hash = gsiPartition (constant value), sort = date.
+    //     Used for global `date desc` ordering across all feeds.
+    //
+    // SCAN FALLBACK (documented per design "Secondary index dependency"): if
+    // these indexes are unavailable (e.g. not yet deployed), the gallery
+    // helpers MUST fall back to `client.models.Image.list({ limit, nextToken,
+    // filter })` and apply an explicit per-page STABLE SORT by
+    // `(date desc, id desc)` in the helper. DynamoDB sorts by a single sort key
+    // only, so the `id desc` tiebreak is always applied in-helper as a
+    // deterministic secondary sort over items sharing an identical `date`,
+    // whether reading via index or scan.
+    .secondaryIndexes((index) => [
+      index('camFeed').sortKeys(['date']).queryField('imagesByFeedAndDate'),
+      index('gsiPartition').sortKeys(['date']).queryField('imagesByDate'),
+    ])
     .authorization((allow) => [
       allow.publicApiKey().to(['read']),
       allow.group('admin').to(['create', 'update', 'delete']),
