@@ -108,7 +108,7 @@ properties from the design are covered.
     - Generator: `fc.array` of objects with varied `label`/`consensusName`/`totalVotes`; assert overlay subset is exactly `label === "Bear"` and label resolution matches null/non-null rules
     - `// Feature: image-gallery, Property 12: ...`
 
-- [~] 5. Implement the Query_State control-change reducer and combined-filter predicate
+- [x] 5. Implement the Query_State control-change reducer and combined-filter predicate
   - [x] 5.1 Add `applyControlChange` and `applyClear` reducers to `src/lib/gallery/query-state.ts`
     - `applyControlChange` sets `page = 1` whenever `year`, `feed`, `bears`, or a new non-empty trimmed `q` changes
     - `applyClear` returns exactly `DEFAULT_QUERY_STATE`
@@ -118,19 +118,19 @@ properties from the design are covered.
     - Combine year, feed, bear-presence, and search predicates with logical AND, treating each inactive filter as always-true, reusing `isInUtcYear`, `matchesBearPresence`, and `bearListMatches`
     - _Requirements: 2.10, 3.3_
 
-  - [ ] 5.3 Write property test for reset-to-page-1 on change
+  - [x] 5.3 Write property test for reset-to-page-1 on change
     - **Property 9: Changing a filter or a non-empty search resets to page 1**
     - **Validates: Requirements 2.12, 3.4**
     - Generator: starting `QueryState` + a change to `year`/`feed`/`bears`/new non-empty `q`; assert resulting `page === 1`
     - `// Feature: image-gallery, Property 9: ...`
 
-  - [ ] 5.4 Write property test for clear resetting to default
+  - [x] 5.4 Write property test for clear resetting to default
     - **Property 10: Clear resets to the default unfiltered first page**
     - **Validates: Requirements 2.13**
     - Generator: arbitrary `QueryState`; assert `applyClear` returns exactly `DEFAULT_QUERY_STATE`
     - `// Feature: image-gallery, Property 10: ...`
 
-  - [ ] 5.5 Write property test for combined filters as logical AND
+  - [x] 5.5 Write property test for combined filters as logical AND
     - **Property 8: Combined filters are a logical AND**
     - **Validates: Requirements 2.10, 3.3**
     - Generator: `fc.array` of images + arbitrary `GalleryFilter`; assert inclusion iff year AND feed AND bear-presence AND search all pass

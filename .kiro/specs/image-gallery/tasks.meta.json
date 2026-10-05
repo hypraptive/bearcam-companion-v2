@@ -250,6 +250,49 @@
         "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
         "timestamp": 1791170586050
       }
+    ],
+    "5.3 Write property test for reset-to-page-1 on change": [
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170593525
+      },
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170724716
+      }
+    ],
+    "5.4 Write property test for clear resetting to default": [
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170594825
+      },
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170727319
+      }
+    ],
+    "5.5 Write property test for combined filters as logical AND": [
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170595608
+      },
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170729913
+      }
+    ],
+    "5. Implement the Query_State control-change reducer and combined-filter predicate": [
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791170729960
+      }
     ]
   }
 }
