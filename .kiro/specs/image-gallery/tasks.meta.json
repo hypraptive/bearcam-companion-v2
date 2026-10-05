@@ -329,6 +329,557 @@
         "chatSessionId": "sess_30cc0454-a69c-40d7-a0a3-21c263584282",
         "timestamp": 1791171551404
       }
+    ],
+    "8.1 Define helper types and `GalleryFilter` → AppSync `buildFilter`": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727191
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171734817
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171828511
+      }
+    ],
+    "8.2 Implement `listImagesPage(filter, token)`": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727255
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171834941
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172124954
+      }
+    ],
+    "8.3 Implement `resolvePageCursor(filter, page)`": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727291
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172137502
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172245975
+      }
+    ],
+    "8.4 Implement `getImageWithObjects(id)` and `getAdjacentImageIds(filter, currentId)`": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727319
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171836271
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172125908
+      }
+    ],
+    "8.5 Write unit tests for cursor walk and adjacency against a mocked list": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727352
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172258973
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172385690
+      }
+    ],
+    "8.6 Write integration tests for read-only apiKey access": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727392
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172259590
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172386974
+      }
+    ],
+    "9. Checkpoint - data access layer": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727419
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173486797
+      }
+    ],
+    "10.1 Implement `ImageCard` (`src/components/images/image-card.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727451
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171837656
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172127394
+      }
+    ],
+    "10.2 Implement `ImageGrid` (`src/components/images/image-grid.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727488
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172138491
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172242303
+      }
+    ],
+    "10.3 Implement `GalleryEmptyState` (`src/components/images/gallery-empty-state.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727519
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171838682
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172128716
+      }
+    ],
+    "10.4 Write component tests for grid, card, and empty-state variants": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727553
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172407750
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172595323
+      }
+    ],
+    "11.1 Implement `FilterControls` (`src/components/images/filter-controls.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727586
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172139806
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172244647
+      }
+    ],
+    "11.2 Implement `SearchControl` (`src/components/images/search-control.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727619
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172141254
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172246924
+      }
+    ],
+    "11.3 Implement `PaginationControls` (`src/components/images/pagination-controls.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727646
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172142044
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172243611
+      }
+    ],
+    "11.4 Implement `GalleryControls` (`src/components/images/gallery-controls.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727677
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172603074
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172761667
+      }
+    ],
+    "11.5 Write component tests for control disabled/empty states": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727710
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172605908
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172764718
+      }
+    ],
+    "12.1 Implement `ConsensusLabel` (`src/components/bears/consensus-label.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727743
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171839721
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172129623
+      }
+    ],
+    "12.2 Implement `BoundingBox` (`src/components/bears/bounding-box.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727781
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172255207
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172387910
+      }
+    ],
+    "12.3 Implement `BoundingBoxLayer` (`src/components/bears/bounding-box-layer.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727812
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172604604
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172762980
+      }
+    ],
+    "12.4 Implement `ImageNav` (`src/components/images/image-nav.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727843
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172256128
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172389319
+      }
+    ],
+    "12.5 Write component tests for overlays and nav edges": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727879
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172606827
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172765387
+      }
+    ],
+    "13.1 Implement `ScrollRestorer` (`src/components/images/scroll-restorer.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727912
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172257640
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172390269
+      }
+    ],
+    "13.2 Write interaction test for scroll save/restore": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727945
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172607626
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172766223
+      }
+    ],
+    "14. Checkpoint - component layer": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171727977
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173487727
+      }
+    ],
+    "15.1 Implement `GalleryPage` (`src/app/(public)/page.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171728010
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172775538
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173105551
+      }
+    ],
+    "15.2 Add `loading.tsx` and `error.tsx` for the gallery route group": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171728044
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173114071
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173345488
+      }
+    ],
+    "16.1 Implement `ImageDetail` (`src/app/(public)/images/[id]/page.tsx`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171728078
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172776438
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173106462
+      }
+    ],
+    "16.2 Add `loading.tsx`, `not-found.tsx`, and `error.tsx` for the detail route": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171728112
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173115019
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173346429
+      }
+    ],
+    "17.1 Write integration test for Query_State round-trip across navigation": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171728144
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173353979
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173469225
+      }
+    ],
+    "18. Final checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791171728185
+      },
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173488501
+      }
+    ],
+    "8. Implement AppSync gallery helpers (`src/lib/amplify/gallery.ts`)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172387010
+      }
+    ],
+    "10. Implement gallery display components (Server Components)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172595386
+      }
+    ],
+    "11. Implement gallery control components (Client Components)": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172764755
+      }
+    ],
+    "12. Implement bounding-box and consensus components, and image navigation": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172765420
+      }
+    ],
+    "13. Implement scroll restoration component": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791172766255
+      }
+    ],
+    "15. Wire the Gallery_Page and its App Router convention files": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173345544
+      }
+    ],
+    "16. Wire the Image_Detail_Page and its App Router convention files": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173346470
+      }
+    ],
+    "17. Integration wiring and end-to-end state preservation": [
+      {
+        "executionId": "3d064d06-c0a4-48e3-8a4e-6be5d6b313e5",
+        "chatSessionId": "sess_0c58c648-639f-4067-bd72-a00e59ca1171",
+        "timestamp": 1791173469267
+      }
     ]
   }
 }

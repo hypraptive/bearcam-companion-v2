@@ -145,132 +145,132 @@ properties from the design are covered.
     - This file is owned by `project-setup`; add the index additively without altering existing auth rules or fields, and leave an inline comment noting the cross-spec ownership and the scan + per-page stable-sort `(date desc, id desc)` fallback the helpers must use if the index is unavailable
     - _Requirements: 1.1, 2.6_
 
-- [ ] 8. Implement AppSync gallery helpers (`src/lib/amplify/gallery.ts`)
-  - [ ] 8.1 Define helper types and `GalleryFilter` → AppSync `buildFilter`
+- [x] 8. Implement AppSync gallery helpers (`src/lib/amplify/gallery.ts`)
+  - [x] 8.1 Define helper types and `GalleryFilter` → AppSync `buildFilter`
     - Define `ImageModel`, `ObjectModel`, `ImageWithObjects`, `ImagePage`, and `GalleryFilter` from the generated `Schema` type (no duplicated model types)
     - Implement `buildFilter(f)`: `camFeed → eq`; `yearRange → date between`; `bears → bearCount ge 1 / eq 0 / omitted`; `q → bearList contains(term)` combined with AND
     - _Requirements: 7.1, 7.2, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 3.3_
 
-  - [ ] 8.2 Implement `listImagesPage(filter, token)`
+  - [x] 8.2 Implement `listImagesPage(filter, token)`
     - Use `authMode: 'apiKey'`, read-only `list` with `limit = PAGE_SIZE`, `nextToken`, `sortDirection: 'DESC'`, and `buildFilter`; apply the in-helper stable `(date desc, id desc)` sort and the exact `bearListMatches` residual search over the returned page; populate `hasNextPage`, `nextToken`, and `requestedPageEmpty`
     - _Requirements: 1.1, 1.2, 1.5, 1.6, 1.9, 3.2, 7.3, 7.4_
 
-  - [ ] 8.3 Implement `resolvePageCursor(filter, page)`
+  - [x] 8.3 Implement `resolvePageCursor(filter, page)`
     - Walk the `nextToken` chain forward from page 1, materializing the cursor for the requested page; return `{ token, lastPage, reachedRequested }`; short-circuit when the chain exhausts before the requested page
     - _Requirements: 6.6, 1.9_
 
-  - [ ] 8.4 Implement `getImageWithObjects(id)` and `getAdjacentImageIds(filter, currentId)`
+  - [x] 8.4 Implement `getImageWithObjects(id)` and `getAdjacentImageIds(filter, currentId)`
     - `getImageWithObjects`: `apiKey` read of one Image + its Objects; return `null` when no record exists
     - `getAdjacentImageIds`: resolve newer/older ids under the active ordering + filter; `null` on either side at the newest/oldest edge
     - _Requirements: 4.1, 4.6, 5.2, 5.3, 5.4, 5.5, 7.2, 7.3_
 
-  - [ ] 8.5 Write unit tests for cursor walk and adjacency against a mocked list
+  - [x] 8.5 Write unit tests for cursor walk and adjacency against a mocked list
     - `resolvePageCursor`: page 1 null token, chain exhaustion short-circuit, `lastPage` computation
     - `getAdjacentImageIds`: newest → `newerId` null; oldest → `olderId` null
     - _Requirements: 6.6, 1.9, 5.4, 5.5_
 
-  - [ ] 8.6 Write integration tests for read-only apiKey access
+  - [x] 8.6 Write integration tests for read-only apiKey access
     - `listImagesPage` uses `authMode: 'apiKey'` and issues only read operations; `getImageWithObjects` returns image+objects for a known id and `null` for an unknown id
     - _Requirements: 7.1, 7.2, 7.3, 4.1, 4.6_
 
-- [ ] 9. Checkpoint - data access layer
+- [x] 9. Checkpoint - data access layer
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 10. Implement gallery display components (Server Components)
-  - [ ] 10.1 Implement `ImageCard` (`src/components/images/image-card.tsx`)
+- [x] 10. Implement gallery display components (Server Components)
+  - [x] 10.1 Implement `ImageCard` (`src/components/images/image-card.tsx`)
     - Server Component; render thumbnail via Next.js `<Image>` with a `sizes` attribute matching the 1/2/3/4 column layout and navigate via `<Link>`; show `date`, `camFeed`, `bearCount`
     - _Requirements: 1.3, 1.4, 8.4, 8.5_
 
-  - [ ] 10.2 Implement `ImageGrid` (`src/components/images/image-grid.tsx`)
+  - [x] 10.2 Implement `ImageGrid` (`src/components/images/image-grid.tsx`)
     - Server Component; responsive grid with Tailwind: 1 col below `sm`, 2 at `sm`, 3 at `md`, 4 at `lg`; map images to `ImageCard`
     - _Requirements: 1.1, 8.1, 8.2_
 
-  - [ ] 10.3 Implement `GalleryEmptyState` (`src/components/images/gallery-empty-state.tsx`)
+  - [x] 10.3 Implement `GalleryEmptyState` (`src/components/images/gallery-empty-state.tsx`)
     - Server Component with `variant` prop rendering distinct `no-images`, `no-match`, and `page-beyond` messages
     - _Requirements: 1.9, 1.10, 2.11, 3.5, 7.7_
 
-  - [ ]* 10.4 Write component tests for grid, card, and empty-state variants
+  - [x] 10.4 Write component tests for grid, card, and empty-state variants
     - `ImageGrid` asserts 1/2/3/4 column breakpoint classes; `ImageCard` renders `<Image>` + `<Link>` with date/camFeed/bearCount; empty-state variants render distinct messages
     - _Requirements: 8.1, 1.3, 1.4, 1.9, 1.10, 7.7_
 
-- [ ] 11. Implement gallery control components (Client Components)
-  - [ ] 11.1 Implement `FilterControls` (`src/components/images/filter-controls.tsx`)
+- [x] 11. Implement gallery control components (Client Components)
+  - [x] 11.1 Implement `FilterControls` (`src/components/images/filter-controls.tsx`)
     - Client Component; year select populated from distinct descending years (empty + disabled when none), single CamFeed select over the five codes, bear-presence three-option control defaulting to `any`, plus clear control; emit changes via `onChange`
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.13_
 
-  - [ ] 11.2 Implement `SearchControl` (`src/components/images/search-control.tsx`)
+  - [x] 11.2 Implement `SearchControl` (`src/components/images/search-control.tsx`)
     - Client Component; text input calling `normalizeSearchTerm`; on over-length show max-length indication and keep prior state; submit trimmed term via `onSubmit`
     - _Requirements: 3.1, 3.6, 3.7, 3.8_
 
-  - [ ] 11.3 Implement `PaginationControls` (`src/components/images/pagination-controls.tsx`)
+  - [x] 11.3 Implement `PaginationControls` (`src/components/images/pagination-controls.tsx`)
     - Client Component; prev/next controls with disabled edges driven by `hasPrevPage`/`hasNextPage`
     - _Requirements: 1.5, 1.6, 1.7_
 
-  - [ ] 11.4 Implement `GalleryControls` (`src/components/images/gallery-controls.tsx`)
+  - [x] 11.4 Implement `GalleryControls` (`src/components/images/gallery-controls.tsx`)
     - Client Component; compose `FilterControls`, `SearchControl`, and clear; own URL writes via `useRouter`/`useSearchParams` using `applyControlChange`/`applyClear` + `toSearchParams`, resetting to page 1 on filter/search change
     - _Requirements: 2.12, 2.13, 3.4, 6.1_
 
-  - [ ]* 11.5 Write component tests for control disabled/empty states
+  - [x] 11.5 Write component tests for control disabled/empty states
     - `PaginationControls` disabled at first/last page; `FilterControls` year empty-disabled state; `SearchControl` over-length message
     - _Requirements: 1.6, 1.7, 2.2, 3.8_
 
-- [ ] 12. Implement bounding-box and consensus components, and image navigation
-  - [ ] 12.1 Implement `ConsensusLabel` (`src/components/bears/consensus-label.tsx`)
+- [x] 12. Implement bounding-box and consensus components, and image navigation
+  - [x] 12.1 Implement `ConsensusLabel` (`src/components/bears/consensus-label.tsx`)
     - Server-safe; render `consensusName` + `totalVotes`, or the no-identification placeholder with 0 votes when `consensusName` is null, using `resolveConsensusLabel`
     - _Requirements: 4.4, 4.5_
 
-  - [ ] 12.2 Implement `BoundingBox` (`src/components/bears/bounding-box.tsx`)
+  - [x] 12.2 Implement `BoundingBox` (`src/components/bears/bounding-box.tsx`)
     - Client Component; render one rectangle from a computed `rect` plus a nested `ConsensusLabel`
     - _Requirements: 4.2, 4.4, 4.5_
 
-  - [ ] 12.3 Implement `BoundingBoxLayer` (`src/components/bears/bounding-box-layer.tsx`)
+  - [x] 12.3 Implement `BoundingBoxLayer` (`src/components/bears/bounding-box-layer.tsx`)
     - Client Component; measure the rendered image box, use `selectBearOverlays` + `computeOverlayRect` to position one `BoundingBox` per Bear object; render zero overlays when none
     - _Requirements: 4.2, 4.3_
 
-  - [ ] 12.4 Implement `ImageNav` (`src/components/images/image-nav.tsx`)
+  - [x] 12.4 Implement `ImageNav` (`src/components/images/image-nav.tsx`)
     - Client Component; prev/next `<Link>`s carrying the Query_State forward unchanged; disabled at newest/oldest edges; inline indication when an adjacent image cannot be loaded
     - _Requirements: 5.1, 5.4, 5.5, 5.6, 5.7_
 
-  - [ ]* 12.5 Write component tests for overlays and nav edges
+  - [x] 12.5 Write component tests for overlays and nav edges
     - `BoundingBoxLayer` renders one overlay per Bear object and zero when none; `ImageNav` disabled at newest/oldest edges; `ConsensusLabel` null vs non-null rendering
     - _Requirements: 4.3, 4.5, 5.4, 5.5_
 
-- [ ] 13. Implement scroll restoration component
-  - [ ] 13.1 Implement `ScrollRestorer` (`src/components/images/scroll-restorer.tsx`)
+- [x] 13. Implement scroll restoration component
+  - [x] 13.1 Implement `ScrollRestorer` (`src/components/images/scroll-restorer.tsx`)
     - Client Component; save/restore grid vertical scroll keyed by the serialized Query_State using `sessionStorage` and `window.scrollTo`
     - _Requirements: 6.7_
 
-  - [ ]* 13.2 Write interaction test for scroll save/restore
+  - [x] 13.2 Write interaction test for scroll save/restore
     - Drive `sessionStorage` + `window.scrollTo`; assert approximate restoration on return keyed by Query_State
     - _Requirements: 6.7_
 
-- [ ] 14. Checkpoint - component layer
+- [x] 14. Checkpoint - component layer
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 15. Wire the Gallery_Page and its App Router convention files
-  - [ ] 15.1 Implement `GalleryPage` (`src/app/(public)/page.tsx`)
+- [x] 15. Wire the Gallery_Page and its App Router convention files
+  - [x] 15.1 Implement `GalleryPage` (`src/app/(public)/page.tsx`)
     - Server Component (default export); parse `searchParams` via `parseQueryState`, build `GalleryFilter`, call `resolvePageCursor` + `listImagesPage`, clamp page via `clampPage`, and render `GalleryControls` + `ImageGrid`/`GalleryEmptyState` + `PaginationControls` + `ScrollRestorer`; choose the empty-state variant from the result
     - _Requirements: 1.1, 1.2, 1.9, 1.10, 2.11, 3.5, 6.3, 6.4, 6.6, 7.5, 7.7, 8.3, 8.6_
 
-  - [ ] 15.2 Add `loading.tsx` and `error.tsx` for the gallery route group
+  - [x] 15.2 Add `loading.tsx` and `error.tsx` for the gallery route group
     - `src/app/(public)/loading.tsx`: grid loading indicator; `src/app/(public)/error.tsx` (`'use client'`): error-state message + retry affordance preserving the active Query_State in the URL
     - _Requirements: 1.8, 1.11, 7.6_
 
-- [ ] 16. Wire the Image_Detail_Page and its App Router convention files
-  - [ ] 16.1 Implement `ImageDetail` (`src/app/(public)/images/[id]/page.tsx`)
+- [x] 16. Wire the Image_Detail_Page and its App Router convention files
+  - [x] 16.1 Implement `ImageDetail` (`src/app/(public)/images/[id]/page.tsx`)
     - Server Component (default export); fetch via `getImageWithObjects`, call `notFound()` on `null`; render the full `<Image>`, `BoundingBoxLayer`, `date`/`camFeed` metadata, and `ImageNav` fed by `getAdjacentImageIds`, carrying Query_State forward
     - _Requirements: 4.1, 4.3, 4.6, 4.7, 5.1, 5.6, 6.2, 7.5, 8.3, 8.4, 8.5_
 
-  - [ ] 16.2 Add `loading.tsx`, `not-found.tsx`, and `error.tsx` for the detail route
+  - [x] 16.2 Add `loading.tsx`, `not-found.tsx`, and `error.tsx` for the detail route
     - `loading.tsx`: detail loading indicator; `not-found.tsx`: 404 with zero overlays; `error.tsx` (`'use client'`): "image could not be loaded" with zero overlays
     - _Requirements: 4.6, 4.8, 5.7_
 
-- [ ] 17. Integration wiring and end-to-end state preservation
-  - [ ]* 17.1 Write integration test for Query_State round-trip across navigation
+- [x] 17. Integration wiring and end-to-end state preservation
+  - [x] 17.1 Write integration test for Query_State round-trip across navigation
     - Load `/?feed=BF&bears=with`, open a detail page, return, and confirm the grid is restored to the same Query_State (filters, search, page)
     - _Requirements: 6.2, 6.3, 6.4_
 
-- [ ] 18. Final checkpoint - Ensure all tests pass
+- [x] 18. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes
