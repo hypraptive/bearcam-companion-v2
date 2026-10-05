@@ -150,3 +150,53 @@ export function normalizeSearchTerm(
   }
   return { ok: true, term: trimmed };
 }
+
+/**
+ * Apply a control change (a partial Query_State edit from a filter/search/
+ * pagination control) to the current state, returning a new normalized
+ * QueryState.
+ *
+ * The `q` field of `change`, if present, is trimmed before being compared and
+ * applied, so callers may pass raw input.
+ *
+ * Pagination is reset to the first page (`page = 1`) whenever the change alters
+ * a filter dimension — `year`, `feed`, or `bears` — or sets a NEW non-empty
+ * trimmed `q` relative to `current` (Req 2.12, 3.4). A change that leaves every
+ * filter dimension untouched (e.g. only `page` moves, or `q` normalizes to the
+ * same value, or the search is cleared) preserves the incoming `page` and does
+ * not force it back to 1.
+ */
+export function applyControlChange(
+  current: QueryState,
+  change: Partial<QueryState>,
+): QueryState {
+  // Trim q from the change (if present) before comparing/applying.
+  const trimmedQ = change.q !== undefined ? change.q.trim() : undefined;
+
+  const merged: QueryState = {
+    ...current,
+    ...change,
+    ...(trimmedQ !== undefined ? { q: trimmedQ } : {}),
+  };
+
+  const yearChanged = merged.year !== current.year;
+  const feedChanged = merged.feed !== current.feed;
+  const bearsChanged = merged.bears !== current.bears;
+  // Only a NEW non-empty search term forces page 1 (Req 3.4); clearing the
+  // search is governed by the remaining filters and does not reset the page.
+  const newNonEmptySearch = merged.q !== current.q && merged.q !== '';
+
+  if (yearChanged || feedChanged || bearsChanged || newNonEmptySearch) {
+    return { ...merged, page: 1 };
+  }
+
+  return merged;
+}
+
+/**
+ * Clear all filters, search, and pagination, returning exactly the default
+ * unfiltered first-page state (Req 2.13).
+ */
+export function applyClear(): QueryState {
+  return DEFAULT_QUERY_STATE;
+}

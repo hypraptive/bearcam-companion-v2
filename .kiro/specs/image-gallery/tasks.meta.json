@@ -171,6 +171,73 @@
         "chatSessionId": "sess_b3cbe87b-65bf-474a-b2a9-783e5ba7e0a0",
         "timestamp": 1791078128404
       }
+    ],
+    "4.1 Implement `src/lib/bears/geometry.ts`": [
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078564088
+      },
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078651551
+      }
+    ],
+    "4.3 Implement `src/lib/bears/overlay-selection.ts`": [
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078565005
+      },
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078652222
+      }
+    ],
+    "4.2 Write property test for overlay geometry scaling": [
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078693178
+      },
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078770827
+      }
+    ],
+    "4.4 Write property test for Bear-only overlays and consensus label": [
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078694035
+      },
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078771554
+      }
+    ],
+    "4. Implement bounding-box geometry and overlay-selection modules": [
+      {
+        "executionId": "bfa1fbb1-4a28-4931-a134-4717bca8a5cb",
+        "chatSessionId": "sess_cd7f7e9c-7ab6-459e-8777-961b7b0bd23f",
+        "timestamp": 1791078771588
+      }
+    ],
+    "5.1 Add `applyControlChange` and `applyClear` reducers to `src/lib/gallery/query-state.ts`": [
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791168232494
+      },
+      {
+        "executionId": "48b618e6-34ee-4618-aa1f-e7276cd0920f",
+        "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
+        "timestamp": 1791168382122
+      }
     ]
   }
 }

@@ -86,30 +86,30 @@ properties from the design are covered.
     - Generator: `fc.integer({ min: 0 })` bearCount; assert `with`/`without` mutually exclusive and jointly exhaustive, `any` always true
     - `// Feature: image-gallery, Property 7: ...`
 
-- [ ] 4. Implement bounding-box geometry and overlay-selection modules
-  - [ ] 4.1 Implement `src/lib/bears/geometry.ts`
+- [x] 4. Implement bounding-box geometry and overlay-selection modules
+  - [x] 4.1 Implement `src/lib/bears/geometry.ts`
     - Export a pure `computeOverlayRect({ left, top, width, height }, W, H)` returning `{ left: left*W, top: top*H, width: width*W, height: height*H }` with explicit return type
     - _Requirements: 4.2_
 
-  - [ ]* 4.2 Write property test for overlay geometry scaling
+  - [x] 4.2 Write property test for overlay geometry scaling
     - **Property 11: Bounding-box overlay geometry scales with rendered size**
     - **Validates: Requirements 4.2**
     - Generator: `fc.float({ min: 0, max: 1 })` fractional coords + `fc.float({ min: 0 })` W/H; assert exact scaling and containment when `left+width<=1` and `top+height<=1`
     - `// Feature: image-gallery, Property 11: ...`
 
-  - [ ] 4.3 Implement `src/lib/bears/overlay-selection.ts`
+  - [x] 4.3 Implement `src/lib/bears/overlay-selection.ts`
     - Export `selectBearOverlays(objects)` returning only objects whose `label === "Bear"`
     - Export `resolveConsensusLabel({ consensusName, totalVotes })` returning name + votes when `consensusName` is non-null, else the no-identification placeholder with `totalVotes` of 0
     - _Requirements: 4.3, 4.4, 4.5_
 
-  - [ ]* 4.4 Write property test for Bear-only overlays and consensus label
+  - [x] 4.4 Write property test for Bear-only overlays and consensus label
     - **Property 12: Only Bear objects are overlaid; consensus label reflects votes**
     - **Validates: Requirements 4.3, 4.4, 4.5**
     - Generator: `fc.array` of objects with varied `label`/`consensusName`/`totalVotes`; assert overlay subset is exactly `label === "Bear"` and label resolution matches null/non-null rules
     - `// Feature: image-gallery, Property 12: ...`
 
-- [ ] 5. Implement the Query_State control-change reducer and combined-filter predicate
-  - [ ] 5.1 Add `applyControlChange` and `applyClear` reducers to `src/lib/gallery/query-state.ts`
+- [~] 5. Implement the Query_State control-change reducer and combined-filter predicate
+  - [x] 5.1 Add `applyControlChange` and `applyClear` reducers to `src/lib/gallery/query-state.ts`
     - `applyControlChange` sets `page = 1` whenever `year`, `feed`, `bears`, or a new non-empty trimmed `q` changes
     - `applyClear` returns exactly `DEFAULT_QUERY_STATE`
     - _Requirements: 2.12, 3.4, 2.13_
@@ -118,19 +118,19 @@ properties from the design are covered.
     - Combine year, feed, bear-presence, and search predicates with logical AND, treating each inactive filter as always-true, reusing `isInUtcYear`, `matchesBearPresence`, and `bearListMatches`
     - _Requirements: 2.10, 3.3_
 
-  - [ ]* 5.3 Write property test for reset-to-page-1 on change
+  - [ ] 5.3 Write property test for reset-to-page-1 on change
     - **Property 9: Changing a filter or a non-empty search resets to page 1**
     - **Validates: Requirements 2.12, 3.4**
     - Generator: starting `QueryState` + a change to `year`/`feed`/`bears`/new non-empty `q`; assert resulting `page === 1`
     - `// Feature: image-gallery, Property 9: ...`
 
-  - [ ]* 5.4 Write property test for clear resetting to default
+  - [ ] 5.4 Write property test for clear resetting to default
     - **Property 10: Clear resets to the default unfiltered first page**
     - **Validates: Requirements 2.13**
     - Generator: arbitrary `QueryState`; assert `applyClear` returns exactly `DEFAULT_QUERY_STATE`
     - `// Feature: image-gallery, Property 10: ...`
 
-  - [ ]* 5.5 Write property test for combined filters as logical AND
+  - [ ] 5.5 Write property test for combined filters as logical AND
     - **Property 8: Combined filters are a logical AND**
     - **Validates: Requirements 2.10, 3.3**
     - Generator: `fc.array` of images + arbitrary `GalleryFilter`; assert inclusion iff year AND feed AND bear-presence AND search all pass
