@@ -33,7 +33,7 @@ export const NO_IDENTIFICATION_LABEL = 'No identification yet';
  * Any value carrying a `label` field (including the generated `ObjectModel`)
  * satisfies this, so callers never need to duplicate the full model type.
  */
-type Labeled = { label: ObjectModel['label'] };
+type Labeled = { label?: ObjectModel['label'] };
 
 /**
  * Minimal structural input for consensus-label resolution. Accepts the possibly
