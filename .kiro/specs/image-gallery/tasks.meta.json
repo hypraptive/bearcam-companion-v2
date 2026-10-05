@@ -293,6 +293,18 @@
         "chatSessionId": "sess_500fbdd6-b621-4cb7-bad7-c22dc0f29646",
         "timestamp": 1791170729960
       }
+    ],
+    "6. Checkpoint - pure logic layer": [
+      {
+        "executionId": "007120b1-43f5-4747-bbc0-4844ef18ea27",
+        "chatSessionId": "sess_fe8cbb5e-4026-4f4c-b4d1-52464c291941",
+        "timestamp": 1791170797820
+      },
+      {
+        "executionId": "007120b1-43f5-4747-bbc0-4844ef18ea27",
+        "chatSessionId": "sess_fe8cbb5e-4026-4f4c-b4d1-52464c291941",
+        "timestamp": 1791170858728
+      }
     ]
   }
 }

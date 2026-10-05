@@ -136,7 +136,7 @@ properties from the design are covered.
     - Generator: `fc.array` of images + arbitrary `GalleryFilter`; assert inclusion iff year AND feed AND bear-presence AND search all pass
     - `// Feature: image-gallery, Property 8: ...`
 
-- [ ] 6. Checkpoint - pure logic layer
+- [x] 6. Checkpoint - pure logic layer
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 7. Add the `Image` secondary index with documented scan fallback
