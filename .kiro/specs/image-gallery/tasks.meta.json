@@ -317,6 +317,18 @@
         "chatSessionId": "sess_d384412d-90c9-4c89-8ec3-20bf8219502e",
         "timestamp": 1791171090023
       }
+    ],
+    "7.1 Add the secondary index(es) to the `Image` model in `amplify/data/resource.ts`": [
+      {
+        "executionId": "d3d19ba9-edbc-48fd-b9b6-62b76b054d66",
+        "chatSessionId": "sess_30cc0454-a69c-40d7-a0a3-21c263584282",
+        "timestamp": 1791171366976
+      },
+      {
+        "executionId": "d3d19ba9-edbc-48fd-b9b6-62b76b054d66",
+        "chatSessionId": "sess_30cc0454-a69c-40d7-a0a3-21c263584282",
+        "timestamp": 1791171551404
+      }
     ]
   }
 }

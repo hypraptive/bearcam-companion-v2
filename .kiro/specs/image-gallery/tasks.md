@@ -140,7 +140,7 @@ properties from the design are covered.
   - Ensure all tests pass, ask the user if questions arise.
 
 - [x] 7. Add the `Image` secondary index with documented scan fallback
-  - [ ] 7.1 Add the secondary index(es) to the `Image` model in `amplify/data/resource.ts`
+  - [x] 7.1 Add the secondary index(es) to the `Image` model in `amplify/data/resource.ts`
     - Add `camFeed`-hash / `date`-sort index (`imagesByFeedAndDate`) and a constant-partition index for global `date desc` ordering, per the design's Data Models section
     - This file is owned by `project-setup`; add the index additively without altering existing auth rules or fields, and leave an inline comment noting the cross-spec ownership and the scan + per-page stable-sort `(date desc, id desc)` fallback the helpers must use if the index is unavailable
     - _Requirements: 1.1, 2.6_
@@ -164,12 +164,12 @@ properties from the design are covered.
     - `getAdjacentImageIds`: resolve newer/older ids under the active ordering + filter; `null` on either side at the newest/oldest edge
     - _Requirements: 4.1, 4.6, 5.2, 5.3, 5.4, 5.5, 7.2, 7.3_
 
-  - [ ]* 8.5 Write unit tests for cursor walk and adjacency against a mocked list
+  - [ ] 8.5 Write unit tests for cursor walk and adjacency against a mocked list
     - `resolvePageCursor`: page 1 null token, chain exhaustion short-circuit, `lastPage` computation
     - `getAdjacentImageIds`: newest → `newerId` null; oldest → `olderId` null
     - _Requirements: 6.6, 1.9, 5.4, 5.5_
 
-  - [ ]* 8.6 Write integration tests for read-only apiKey access
+  - [ ] 8.6 Write integration tests for read-only apiKey access
     - `listImagesPage` uses `authMode: 'apiKey'` and issues only read operations; `getImageWithObjects` returns image+objects for a known id and `null` for an unknown id
     - _Requirements: 7.1, 7.2, 7.3, 4.1, 4.6_
 
