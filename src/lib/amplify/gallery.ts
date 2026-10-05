@@ -10,8 +10,10 @@
  */
 
 import type { CamFeed } from '@/lib/constants';
-import type { BearPresence } from '@/lib/gallery/query-state';
+import { bearListMatches } from '@/lib/gallery/filter';
+import { PAGE_SIZE, type BearPresence } from '@/lib/gallery/query-state';
 import type { Schema } from '../../../amplify/data/resource';
+import { client } from './client';
 
 /**
  * The generated `Image` model type. Consumed from the Amplify schema — never
@@ -131,4 +133,221 @@ export function buildFilter(f: GalleryFilter): AppSyncFilter {
   if (leaves.length === 0) return {};
   if (leaves.length === 1) return leaves[0];
   return { and: leaves };
+}
+
+/**
+ * Stable comparator implementing the gallery's canonical ordering: `date`
+ * descending, with ties broken by `id` descending (Req 1.1).
+ *
+ * DynamoDB sorts only by its single sort key (`date`), so the `id desc`
+ * tiebreak is reapplied here as a deterministic secondary sort within the
+ * returned page. Null/undefined/unparseable `date`s sort to the end (treated as
+ * the oldest), keeping the comparison total so `Array.prototype.sort` stays
+ * stable and deterministic.
+ */
+function compareByDateDescIdDesc(a: ImageModel, b: ImageModel): number {
+  const aMs = a.date != null ? Date.parse(a.date) : Number.NaN;
+  const bMs = b.date != null ? Date.parse(b.date) : Number.NaN;
+  const aValid = !Number.isNaN(aMs);
+  const bValid = !Number.isNaN(bMs);
+
+  if (aValid && bValid) {
+    if (aMs !== bMs) return bMs - aMs; // date descending
+  } else if (aValid !== bValid) {
+    // Valid dates sort before invalid/missing ones (newest-first ordering).
+    return aValid ? -1 : 1;
+  }
+
+  // date tie (or both invalid) → id descending.
+  if (a.id < b.id) return 1;
+  if (a.id > b.id) return -1;
+  return 0;
+}
+
+/**
+ * Fetch exactly one page of images under the active filter and ordering
+ * (Req 1.1, 1.2, 1.5, 1.6, 1.9, 3.2).
+ *
+ * Reads through the Amplify data client with `authMode: 'apiKey'` (anonymous,
+ * public read — Req 7.2) using a single read-only `list` (Req 7.3, 7.4) of at
+ * most `PAGE_SIZE` records, advancing via the opaque `nextToken` cursor.
+ *
+ * This takes the design's documented scan + per-page stable-sort fallback: the
+ * base `Image.list({ limit, nextToken, filter })` scan does not itself accept a
+ * `sortDirection` argument (that belongs to the index query fields
+ * `imagesByFeedAndDate` / `imagesByDate`), so newest-first ordering is enforced
+ * entirely by the in-helper `(date desc, id desc)` stable sort below rather than
+ * by the backend. This guarantees correct ordering within the fetched page; the
+ * index-backed query fields remain the design's preferred primary path for
+ * cross-page ordering (see the Secondary index dependency note in the design).
+ *
+ * Over the returned page the helper then:
+ * 1. Applies the in-helper stable `(date desc, id desc)` sort (Req 1.1), the
+ *    sole source of ordering for the fetched page under this fallback.
+ * 2. Applies the exact `bearListMatches` residual search (Req 3.2) when a search
+ *    term is active. The AppSync `bearList contains` leaf in `buildFilter` is a
+ *    coarse, case-sensitive, comma-blind pre-filter only; `bearListMatches` is
+ *    the authority for correctness, so it is reapplied here, comma-aware and
+ *    case-insensitive, before the page is rendered (see the `bearList` search
+ *    caveat in the design).
+ *
+ * Result fields:
+ * - `images`: the sorted, residually filtered page (≤ `PAGE_SIZE`).
+ * - `nextToken`: the backend cursor to the page after this one, or `null` when
+ *   none remains.
+ * - `hasNextPage`: true iff a further page exists, i.e. the backend returned a
+ *   non-null cursor (Req 1.5, 1.6).
+ * - `requestedPageEmpty`: true iff the requested page index was beyond the
+ *   available data — the backend returned zero records for this cursor
+ *   (Req 1.9).
+ *
+ * Note on the residual search and `hasNextPage`: the exact search is applied
+ * over the already-fetched page and does not drive cursor advancement, so
+ * `hasNextPage`/`nextToken` reflect the backend's own pagination over the
+ * coarse filter. This matches the design, which applies `bearListMatches` as a
+ * residual filter on the returned page rather than as a pagination driver.
+ */
+export async function listImagesPage(
+  filter: GalleryFilter,
+  token: string | null,
+): Promise<ImagePage> {
+  const { data, nextToken } = await client.models.Image.list({
+    authMode: 'apiKey',
+    limit: PAGE_SIZE,
+    nextToken: token ?? undefined,
+    filter: buildFilter(filter),
+  });
+
+  const raw = data ?? [];
+
+  // Stable (date desc, id desc) sort over the returned page.
+  const sorted = [...raw].sort(compareByDateDescIdDesc);
+
+  // Exact, comma-aware, case-insensitive residual search (Req 3.2).
+  const term = filter.q.trim();
+  const images =
+    term === '' ? sorted : sorted.filter((image) => bearListMatches(image.bearList, term));
+
+  const resolvedNextToken = nextToken ?? null;
+
+  return {
+    images,
+    hasNextPage: resolvedNextToken !== null,
+    nextToken: resolvedNextToken,
+    requestedPageEmpty: raw.length === 0,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Detail + adjacency read helpers (task 8.4)
+//
+// Both helpers read through the shared Amplify data `client` (imported at the
+// top of this file) with `authMode: 'apiKey'` (Req 7.2) and perform read-only
+// operations only (Req 7.3, 7.4). They return typed results (`null` / plain
+// objects) rather than letting raw GraphQL errors escape, so callers can map a
+// known shape to a known UI state (see the design's Error Handling table).
+// ---------------------------------------------------------------------------
+
+/**
+ * The selection set used to read one Image together with every related Object
+ * for the Image_Detail_Page (Req 4.1, 4.3). Only the fields the detail view and
+ * its bounding-box overlays consume are requested.
+ */
+const IMAGE_WITH_OBJECTS_SELECTION = [
+  'id',
+  'url',
+  'date',
+  's3Key',
+  'bearCount',
+  'bearList',
+  'camFeed',
+  'objects.id',
+  'objects.label',
+  'objects.confidence',
+  'objects.width',
+  'objects.height',
+  'objects.left',
+  'objects.top',
+  'objects.consensusName',
+  'objects.consensusConfidence',
+  'objects.totalVotes',
+] as const;
+
+/**
+ * Fetch exactly one Image and its related Objects by `id` (Req 4.1), using the
+ * public API key (Req 7.2) and a read-only `get` (Req 7.3). Returns `null` when
+ * no Image with that id exists (Req 4.6) so the caller can render a 404; also
+ * returns `null` if the read errors, keeping raw GraphQL errors from escaping.
+ *
+ * The returned shape is `ImageWithObjects`: the Image fields plus a (possibly
+ * empty) `objects` array. Bear-only overlay selection and label resolution
+ * happen downstream in the component layer.
+ */
+export async function getImageWithObjects(id: string): Promise<ImageWithObjects | null> {
+  const { data, errors } = await client.models.Image.get(
+    { id },
+    { authMode: 'apiKey', selectionSet: IMAGE_WITH_OBJECTS_SELECTION },
+  );
+
+  if (errors !== undefined && errors.length > 0) return null;
+  if (data === null || data === undefined) return null;
+
+  return data as unknown as ImageWithObjects;
+}
+
+/**
+ * Resolve the ids of the images immediately newer and older than `currentId`
+ * under the active ordering (`date desc, id desc`) and the active `filter`
+ * (Req 5.2, 5.3), using the public API key (Req 7.2) and read-only `list`s
+ * (Req 7.3).
+ *
+ * "Newer" is the neighbor that sorts immediately before `currentId` (more
+ * recent); "older" sorts immediately after (less recent). A `null` on either
+ * side means `currentId` is the newest/oldest edge under the active filter
+ * (Req 5.4, 5.5).
+ *
+ * This follows the documented scan + per-page stable-sort fallback (see the
+ * secondary-index note in `amplify/data/resource.ts`): it pages through every
+ * Image matching the AppSync `filter`, applies the deterministic
+ * `(date desc, id desc)` sort in-helper, then locates `currentId` and reads off
+ * its neighbors. If the current id is not present under the filter (e.g. it was
+ * excluded by the filter, or does not exist), both sides resolve to `null`.
+ *
+ * On a read error, both sides resolve to `null` so the detail page stays usable
+ * and `ImageNav` can show its inline "adjacent image could not be loaded" state
+ * (Req 5.7) without raw GraphQL errors escaping.
+ */
+export async function getAdjacentImageIds(
+  filter: GalleryFilter,
+  currentId: string,
+): Promise<{ newerId: string | null; olderId: string | null }> {
+  const none = { newerId: null, olderId: null };
+  const appSyncFilter = buildFilter(filter);
+  const images: ImageModel[] = [];
+
+  try {
+    let cursor: string | null = null;
+    do {
+      const page: Awaited<ReturnType<typeof client.models.Image.list>> =
+        await client.models.Image.list({
+          authMode: 'apiKey',
+          filter: appSyncFilter,
+          nextToken: cursor ?? undefined,
+        });
+      if (page.errors !== undefined && page.errors.length > 0) return none;
+      if (page.data !== null && page.data !== undefined) images.push(...page.data);
+      cursor = page.nextToken ?? null;
+    } while (cursor !== null);
+  } catch {
+    return none;
+  }
+
+  images.sort(compareByDateDescIdDesc);
+
+  const index = images.findIndex((img) => img.id === currentId);
+  if (index === -1) return none;
+
+  const newerId = index > 0 ? images[index - 1].id : null;
+  const olderId = index < images.length - 1 ? images[index + 1].id : null;
+  return { newerId, olderId };
 }
