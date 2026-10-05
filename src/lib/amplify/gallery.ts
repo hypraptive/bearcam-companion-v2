@@ -351,3 +351,75 @@ export async function getAdjacentImageIds(
   const olderId = index < images.length - 1 ? images[index + 1].id : null;
   return { newerId, olderId };
 }
+
+// ---------------------------------------------------------------------------
+// Page-number → cursor resolution (task 8.3)
+// ---------------------------------------------------------------------------
+
+/**
+ * Translate a 1-based `page` number into the AppSync `nextToken` cursor for
+ * that page by walking the cursor chain forward from the first page under the
+ * active `filter`/order (Req 6.6, 1.9).
+ *
+ * AppSync exposes no total count and no page-number addressing, so a page is
+ * reached only by following `nextToken` from page 1:
+ *
+ * ```
+ * page 1 → token null
+ * page 2 → nextToken returned by page 1
+ * page N → walk nextToken forward (N-1) times
+ * ```
+ *
+ * The walk reuses {@link listImagesPage} so it goes through the same
+ * `authMode: 'apiKey'`, read-only `list` path and the same filter/order and
+ * residual-search semantics as the page the caller ultimately renders.
+ *
+ * Return shape:
+ * - `token`: the cursor to pass to `listImagesPage` to fetch the requested
+ *   page. `null` for page 1 (and for any `page <= 1`), or when the chain is
+ *   exhausted before the requested page is reached (in which case it is the
+ *   cursor of the last reachable page — i.e. `null` if even page 1 is the end).
+ * - `lastPage`: the highest page index actually reachable before the chain
+ *   returns no further cursor — used to clamp an out-of-range request (Req 6.6).
+ *   Always at least 1, since page 1 is always addressable.
+ * - `reachedRequested`: `true` iff a cursor for the requested page was
+ *   materialized (the chain did not exhaust before it); `false` when the
+ *   request was beyond the available data (Req 1.9).
+ *
+ * The walk short-circuits as soon as the chain exhausts, so the work is bounded
+ * by `min(page, lastPage)` fetches rather than the full dataset (Req 1.9).
+ */
+export async function resolvePageCursor(
+  filter: GalleryFilter,
+  page: number,
+): Promise<{ token: string | null; lastPage: number; reachedRequested: boolean }> {
+  // Page 1 (and any non-positive request) is always addressable with a null
+  // cursor; no walk is needed to reach it.
+  if (page <= 1) {
+    return { token: null, lastPage: 1, reachedRequested: true };
+  }
+
+  // `token` is the cursor for the page currently identified by `currentPage`.
+  // We advance one page at a time until we either reach the requested page or
+  // the chain exhausts.
+  let token: string | null = null;
+  let currentPage = 1;
+
+  while (currentPage < page) {
+    const { nextToken } = await listImagesPage(filter, token);
+
+    // No further cursor: the chain is exhausted at `currentPage`, which is thus
+    // the last reachable page. The requested page is beyond the data.
+    if (nextToken === null) {
+      return { token, lastPage: currentPage, reachedRequested: false };
+    }
+
+    // Advance to the next page: its cursor is the token we just received.
+    token = nextToken;
+    currentPage += 1;
+  }
+
+  // Loop exited with currentPage === page: the requested page's cursor is held
+  // in `token`, and every page up to and including it is reachable.
+  return { token, lastPage: page, reachedRequested: true };
+}
