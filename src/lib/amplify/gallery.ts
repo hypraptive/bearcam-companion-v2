@@ -423,3 +423,61 @@ export async function resolvePageCursor(
   // in `token`, and every page up to and including it is reachable.
   return { token, lastPage: page, reachedRequested: true };
 }
+
+// ---------------------------------------------------------------------------
+// Year population for the FilterControls year select
+// ---------------------------------------------------------------------------
+
+/**
+ * Resolve the distinct calendar years (UTC) for which at least one Image
+ * exists, in descending order, to populate the Gallery_Page's year filter
+ * (Req 2.1); an empty array disables the year control (Req 2.2).
+ *
+ * **Approach (documented per the design's year-population note).** Amplify Data
+ * exposes no aggregate / `DISTINCT` query, so there is no direct "list the
+ * available years" API. The years are therefore derived in-helper from a broad,
+ * read-only `list` of Images (`authMode: 'apiKey'`, Req 7.2; read-only,
+ * Req 7.3/7.4), paging the full `nextToken` chain and projecting each
+ * `Image.date` to its UTC year via `Date.UTC`-consistent parsing. This mirrors
+ * the existing scan + in-helper derivation fallback the other gallery helpers
+ * use (see the secondary-index note), and keeps year population consistent with
+ * the UTC year semantics used everywhere else (`isInUtcYear`).
+ *
+ * The year options are intentionally derived from the *unfiltered* archive
+ * (no `filter` argument) so the set of selectable years stays stable regardless
+ * of which year/feed/search is currently active — picking a year must never
+ * collapse the list of other years a visitor could switch to. The projection
+ * only reads `id` and `date`, so the scan stays as light as the backend allows.
+ *
+ * On a read error the helper returns `[]` (no raw GraphQL error escapes),
+ * degrading the year control to its disabled empty state rather than breaking
+ * the gallery (consistent with the design's Error Handling table).
+ */
+export async function listAvailableYears(): Promise<number[]> {
+  const years = new Set<number>();
+
+  try {
+    let cursor: string | null = null;
+    do {
+      const page: Awaited<ReturnType<typeof client.models.Image.list>> =
+        await client.models.Image.list({
+          authMode: 'apiKey',
+          nextToken: cursor ?? undefined,
+          selectionSet: ['id', 'date'],
+        });
+      if (page.errors !== undefined && page.errors.length > 0) return [];
+      for (const image of page.data ?? []) {
+        if (image.date == null) continue;
+        const ms = Date.parse(image.date);
+        if (Number.isNaN(ms)) continue;
+        years.add(new Date(ms).getUTCFullYear());
+      }
+      cursor = page.nextToken ?? null;
+    } while (cursor !== null);
+  } catch {
+    return [];
+  }
+
+  // Distinct years, newest first (Req 2.1).
+  return [...years].sort((a, b) => b - a);
+}
