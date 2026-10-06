@@ -31,8 +31,13 @@ const createMock = vi.fn();
 const updateMock = vi.fn();
 const deleteMock = vi.fn();
 
-vi.mock('./client', () => ({
-  client: {
+// The gallery read helpers import `serverClient` (the server-configured data
+// client). The mock exposes the same CRUD surface under both `serverClient`
+// and `client` so the mock stays valid regardless of which the helpers use.
+// The object is built inside the factory because `vi.mock` is hoisted above any
+// module-level declarations.
+vi.mock('./client', () => {
+  const mockModels = {
     models: {
       Image: {
         list: (...args: unknown[]) => listMock(...args),
@@ -49,8 +54,9 @@ vi.mock('./client', () => ({
         delete: (...args: unknown[]) => deleteMock(...args),
       },
     },
-  },
-}));
+  };
+  return { serverClient: mockModels, client: mockModels };
+});
 
 const EMPTY_FILTER: GalleryFilter = {
   camFeed: null,

@@ -20,6 +20,13 @@ export const metadata: Metadata = {
 };
 
 /**
+ * The gallery reflects live DynamoDB data (seeded now, ingested later), so it
+ * must be server-rendered per request rather than prerendered at build time —
+ * a static prerender would freeze whatever rows existed at build (often none).
+ */
+export const dynamic = 'force-dynamic';
+
+/**
  * Next.js 14 passes already-decoded search params to a page as a plain record
  * of string | string[] | undefined, which is exactly the shape
  * `parseQueryState` consumes.

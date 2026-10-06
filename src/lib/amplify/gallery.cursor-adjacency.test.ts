@@ -24,16 +24,21 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const listMock = vi.fn();
 const getMock = vi.fn();
 
-vi.mock('./client', () => ({
-  client: {
+// The gallery read helpers import `serverClient`; expose the mock under both
+// `serverClient` and `client` so the mock is valid regardless of which is used.
+// The object is built inside the factory because `vi.mock` is hoisted above any
+// module-level declarations.
+vi.mock('./client', () => {
+  const mockClient = {
     models: {
       Image: {
         list: (...args: unknown[]) => listMock(...args),
         get: (...args: unknown[]) => getMock(...args),
       },
     },
-  },
-}));
+  };
+  return { serverClient: mockClient, client: mockClient };
+});
 
 import {
   getAdjacentImageIds,

@@ -1,5 +1,7 @@
 import { generateClient } from 'aws-amplify/data';
 import { createServerRunner } from '@aws-amplify/adapter-nextjs';
+import { generateServerClientUsingCookies } from '@aws-amplify/adapter-nextjs/data';
+import { cookies } from 'next/headers';
 import outputs from '../../../amplify_outputs.json';
 import type { Schema } from '../../../amplify/data/resource';
 
@@ -18,6 +20,23 @@ export const { runWithAmplifyServerContext } = createServerRunner({
   config: outputs,
 });
 
+/**
+ * Server-side data client for Server Components.
+ *
+ * Created with the Next.js adapter so it is configured from `outputs` on every
+ * server render — a plain `generateClient()` is NOT configured on the server
+ * (nothing calls `Amplify.configure` there) and every query would fail. The
+ * cookies variant yields a client whose `.models.*` calls work directly, and
+ * works for public `apiKey` reads with or without a user session present.
+ *
+ * Use this (not the browser `client`) from any Server Component data path.
+ */
+export const serverClient = generateServerClientUsingCookies<Schema>({
+  config: outputs,
+  cookies,
+});
+
 // Browser-side client — typed against the generated schema.
-// Use only within components marked `'use client'`.
+// Use only within components marked `'use client'`, after Amplify has been
+// configured on the client (see `AmplifyClientConfig`).
 export const client = generateClient<Schema>();

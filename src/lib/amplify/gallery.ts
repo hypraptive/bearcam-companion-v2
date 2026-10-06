@@ -13,7 +13,10 @@ import type { CamFeed } from '@/lib/constants';
 import { bearListMatches } from '@/lib/gallery/filter';
 import { PAGE_SIZE, type BearPresence } from '@/lib/gallery/query-state';
 import type { Schema } from '../../../amplify/data/resource';
-import { client } from './client';
+// These helpers run exclusively from Server Components (via gallery-data.ts).
+// They must use the server-configured client — the browser `client` is not
+// configured on the server and every query would fail there.
+import { serverClient as client } from './client';
 
 /**
  * The generated `Image` model type. Consumed from the Amplify schema — never
