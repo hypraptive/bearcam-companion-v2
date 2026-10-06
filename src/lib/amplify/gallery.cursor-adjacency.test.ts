@@ -173,7 +173,7 @@ describe('getAdjacentImageIds', () => {
     const result = await getAdjacentImageIds(NO_FILTER, 'c');
 
     // Newest edge: no newer neighbor; older neighbor is the next one down.
-    expect(result).toEqual({ newerId: null, olderId: 'b' });
+    expect(result).toEqual({ newerId: null, olderId: 'b', loadError: false });
   });
 
   it('returns null olderId when the current image is the oldest (Req 5.5)', async () => {
@@ -182,7 +182,7 @@ describe('getAdjacentImageIds', () => {
     const result = await getAdjacentImageIds(NO_FILTER, 'a');
 
     // Oldest edge: no older neighbor; newer neighbor is the next one up.
-    expect(result).toEqual({ newerId: 'b', olderId: null });
+    expect(result).toEqual({ newerId: 'b', olderId: null, loadError: false });
   });
 
   it('returns both neighbors for a middle image', async () => {
@@ -190,7 +190,7 @@ describe('getAdjacentImageIds', () => {
 
     const result = await getAdjacentImageIds(NO_FILTER, 'b');
 
-    expect(result).toEqual({ newerId: 'c', olderId: 'a' });
+    expect(result).toEqual({ newerId: 'c', olderId: 'a', loadError: false });
   });
 
   it('returns both null for an id not present under the filter', async () => {
@@ -198,7 +198,8 @@ describe('getAdjacentImageIds', () => {
 
     const result = await getAdjacentImageIds(NO_FILTER, 'does-not-exist');
 
-    expect(result).toEqual({ newerId: null, olderId: null });
+    // Not an error — the id is genuinely absent under the filter.
+    expect(result).toEqual({ newerId: null, olderId: null, loadError: false });
   });
 
   it('collects every page of the list before resolving neighbors', async () => {
@@ -217,16 +218,19 @@ describe('getAdjacentImageIds', () => {
 
     const result = await getAdjacentImageIds(NO_FILTER, 'c');
 
-    expect(result).toEqual({ newerId: null, olderId: 'b' });
+    expect(result).toEqual({ newerId: null, olderId: 'b', loadError: false });
     expect(listMock).toHaveBeenCalledTimes(2);
     expect(listMock.mock.calls[1][0]).toMatchObject({ nextToken: 'p2' });
   });
 
-  it('resolves both null when a list page returns errors (Req 5.7)', async () => {
+  it('resolves both null with loadError true when a list page returns errors (Req 5.7)', async () => {
     queueListResponses([{ data: undefined, nextToken: null, errors: [{ message: 'boom' }] }]);
 
     const result = await getAdjacentImageIds(NO_FILTER, 'c');
 
-    expect(result).toEqual({ newerId: null, olderId: null });
+    // A read error is distinguishable from a genuine no-neighbors result via
+    // loadError === true — this is what makes the Req 5.7 ImageNav error state
+    // reachable.
+    expect(result).toEqual({ newerId: null, olderId: null, loadError: true });
   });
 });

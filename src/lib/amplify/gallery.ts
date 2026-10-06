@@ -316,15 +316,21 @@ export async function getImageWithObjects(id: string): Promise<ImageWithObjects 
  * its neighbors. If the current id is not present under the filter (e.g. it was
  * excluded by the filter, or does not exist), both sides resolve to `null`.
  *
- * On a read error, both sides resolve to `null` so the detail page stays usable
- * and `ImageNav` can show its inline "adjacent image could not be loaded" state
- * (Req 5.7) without raw GraphQL errors escaping.
+ * The `loadError` flag distinguishes a read failure from a legitimate
+ * no-neighbors result, which otherwise both present as `{ newerId: null,
+ * olderId: null }`. On a read error (a `page.errors` response or a thrown
+ * exception) both sides resolve to `null` and `loadError` is `true`, so the
+ * detail page stays usable and `ImageNav` can show its inline "adjacent image
+ * could not be loaded" state (Req 5.7) without raw GraphQL errors escaping. On
+ * every normal path — including the "current id not found under the filter"
+ * case and genuine newest/oldest edges — `loadError` is `false`.
  */
 export async function getAdjacentImageIds(
   filter: GalleryFilter,
   currentId: string,
-): Promise<{ newerId: string | null; olderId: string | null }> {
-  const none = { newerId: null, olderId: null };
+): Promise<{ newerId: string | null; olderId: string | null; loadError: boolean }> {
+  const errorResult = { newerId: null, olderId: null, loadError: true };
+  const noNeighbors = { newerId: null, olderId: null, loadError: false };
   const appSyncFilter = buildFilter(filter);
   const images: ImageModel[] = [];
 
@@ -337,22 +343,22 @@ export async function getAdjacentImageIds(
           filter: appSyncFilter,
           nextToken: cursor ?? undefined,
         });
-      if (page.errors !== undefined && page.errors.length > 0) return none;
+      if (page.errors !== undefined && page.errors.length > 0) return errorResult;
       if (page.data !== null && page.data !== undefined) images.push(...page.data);
       cursor = page.nextToken ?? null;
     } while (cursor !== null);
   } catch {
-    return none;
+    return errorResult;
   }
 
   images.sort(compareByDateDescIdDesc);
 
   const index = images.findIndex((img) => img.id === currentId);
-  if (index === -1) return none;
+  if (index === -1) return noNeighbors;
 
   const newerId = index > 0 ? images[index - 1].id : null;
   const olderId = index < images.length - 1 ? images[index + 1].id : null;
-  return { newerId, olderId };
+  return { newerId, olderId, loadError: false };
 }
 
 // ---------------------------------------------------------------------------

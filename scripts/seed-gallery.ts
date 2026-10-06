@@ -46,8 +46,14 @@ Amplify.configure(outputs);
 // credentials (the same ones `ampx sandbox` uses), then signed in through
 // Amplify Auth so the Data client writes as a `userPool` caller in the admin
 // group.
-const SEED_ADMIN_EMAIL = 'seed-admin@bearcam.local';
-const SEED_ADMIN_PASSWORD = 'SeedAdmin!2026';
+//
+// The seed credentials can be overridden via the SEED_ADMIN_EMAIL and
+// SEED_ADMIN_PASSWORD environment variables; they default to dev-sandbox
+// literals. The fallback password satisfies the Cognito policy in
+// amplify/backend.ts (min 8 chars, upper, lower, number, symbol) — keep any
+// replacement default policy-compliant.
+const SEED_ADMIN_EMAIL = process.env.SEED_ADMIN_EMAIL ?? 'seed-admin@bearcam.local';
+const SEED_ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD ?? 'SeedAdmin!2026';
 
 const cognito = new CognitoIdentityProviderClient({ region: outputs.auth.aws_region });
 

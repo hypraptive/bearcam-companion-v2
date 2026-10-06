@@ -110,7 +110,10 @@ export default async function ImageDetail({
   // (Req 5.2, 5.3). The helper returns null on either edge (Req 5.4, 5.5) and
   // null on both sides on a read failure, which surfaces as the ImageNav error
   // indication (Req 5.7).
-  const { newerId, olderId } = await getAdjacentImageIds(toGalleryFilter(state), image.id);
+  const { newerId, olderId, loadError } = await getAdjacentImageIds(
+    toGalleryFilter(state),
+    image.id,
+  );
 
   const { url, date, camFeed, objects } = image;
 
@@ -152,7 +155,7 @@ export default async function ImageDetail({
       </dl>
 
       {/* Previous/next navigation carrying the Query_State forward (Req 5.1, 5.6). */}
-      <ImageNav newerId={newerId} olderId={olderId} query={query} />
+      <ImageNav newerId={newerId} olderId={olderId} query={query} loadError={loadError} />
     </div>
   );
 }
