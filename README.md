@@ -100,6 +100,20 @@ This project is built with [Kiro](https://kiro.dev) using a spec-driven workflow
 - **`steering/`** — project conventions, tech stack decisions, data model, and backend architecture that guide all development
 - **`specs/`** — feature specs (requirements → design → tasks) for each major piece of functionality
 
+### Seeding development data
+
+The gallery reads from the `Image` and `Object` tables, which are empty until image ingestion runs. To populate your sandbox with sample data for developing and testing the gallery, use the seed script:
+
+```bash
+npm run seed              # seed ~35 images across all feeds and years
+npm run seed -- --clear   # delete all seeded data, then reseed
+npm run seed -- --clear-only
+```
+
+The script is deterministic (fixed random seed) so repeated runs produce the same spread of feeds, years, and bear-presence states. Images point at [Picsum](https://picsum.photos) placeholder URLs, so the bounding boxes are illustrative rather than real detections — real images arrive with the image-ingestion feature.
+
+Writes are authorized only for the `admin` Cognito group, so the script provisions a dedicated `seed-admin@bearcam.local` user in your sandbox user pool (via the Cognito Admin API using your local AWS credentials) and signs in as that user. This is a dev-only tool and is not part of the application or the production data migration.
+
 ### Camera feeds
 
 Images are pulled from these explore.org feeds (Katmai National Park):
